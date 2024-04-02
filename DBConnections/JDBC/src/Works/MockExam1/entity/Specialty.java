@@ -39,8 +39,8 @@ public class Specialty {
     public String toString() {
         return "Specialty{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
+                ", name='" + name +
+                ", description='" + description +
                 '}';
     }
 }
