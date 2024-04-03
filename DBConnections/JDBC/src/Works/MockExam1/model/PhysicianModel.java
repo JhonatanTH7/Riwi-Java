@@ -15,17 +15,69 @@ import java.util.List;
 public class PhysicianModel implements CRUD {
     @Override
     public Object insert(Object object) {
-        return null;
+        Physician objPhysician = (Physician) object;
+        String sql = "INSERT INTO physicians(name,lastName,idSpeciality) VALUES(?,?,?);";
+        Connection objConnection = ConfigDB.openConnection();
+        try {
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            objPrepare.setString(1, objPhysician.getName());
+            objPrepare.setString(2, objPhysician.getLastName());
+            objPrepare.setInt(3, objPhysician.getIdSpecialty());
+            objPrepare.execute();
+            ResultSet objResult = objPrepare.getGeneratedKeys();
+            while (objResult.next()) {
+                objPhysician.setId(objResult.getInt(1));
+            }
+            objPrepare.close();
+            JOptionPane.showMessageDialog(null, "Physician added successfully");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        ConfigDB.closeConnection();
+        return objPhysician;
     }
 
     @Override
     public boolean update(Object object) {
-        return false;
+        String sql = "UPDATE physicians SET name = ?, lastName = ?, idSpecialty = ? WHERE physicians.id = ?;";
+        boolean isUpdated = false;
+        Physician objPhysician = (Physician) object;
+        Connection objConnection = ConfigDB.openConnection();
+        try {
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+            objPrepare.setString(1, objPhysician.getName());
+            objPrepare.setString(2, objPhysician.getLastName());
+            objPrepare.setInt(3, objPhysician.getIdSpecialty());
+            objPrepare.setInt(4, objPhysician.getId());
+            int affectedRows = objPrepare.executeUpdate();
+            if (affectedRows > 0) {
+                isUpdated = true;
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        ConfigDB.closeConnection();
+        return isUpdated;
     }
 
     @Override
     public boolean delete(int id) {
-        return false;
+        String sql = "DELETE FROM physicians WHERE physicians.id = ?;";
+        boolean isDeleted = false;
+        Connection objConnection = ConfigDB.openConnection();
+        try {
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+            objPrepare.setInt(1, id);
+            int affectedRows = objPrepare.executeUpdate();
+            if (affectedRows > 0) {
+                isDeleted = true;
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        ConfigDB.closeConnection();
+        return isDeleted;
     }
 
     @Override
