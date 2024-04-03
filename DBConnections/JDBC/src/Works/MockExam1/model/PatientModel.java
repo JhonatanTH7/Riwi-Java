@@ -116,15 +116,40 @@ public class PatientModel implements CRUD {
             while (objResult.next()) {
                 objPatient = new Patient();
                 objPatient.setId(objResult.getInt("id"));
-                objPatient.setIdentityDocument(objResult.getString("identityDocument"));
                 objPatient.setName(objResult.getString("name"));
                 objPatient.setLastName(objResult.getString("lastName"));
                 objPatient.setDateOfBirth(objResult.getDate("dateOfBirth"));
+                objPatient.setIdentityDocument(objResult.getString("identityDocument"));
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
         ConfigDB.closeConnection();
         return objPatient;
+    }
+
+    public List<Object> findByIdentityDocument(String identityDocumentValidate) {
+        Patient objPatient;
+        String sql = "SELECT * FROM patients WHERE patients.identityDocument LIKE ?;";
+        List<Object> patientsList = new ArrayList<>();
+        Connection objConnection = ConfigDB.openConnection();
+        try {
+            PreparedStatement objPreparedStatement = objConnection.prepareStatement(sql);
+            objPreparedStatement.setString(1, "%" + identityDocumentValidate + "%");
+            ResultSet objResult = objPreparedStatement.executeQuery();
+            while (objResult.next()) {
+                objPatient = new Patient();
+                objPatient.setId(objResult.getInt("id"));
+                objPatient.setName(objResult.getString("name"));
+                objPatient.setLastName(objResult.getString("lastName"));
+                objPatient.setDateOfBirth(objResult.getDate("dateOfBirth"));
+                objPatient.setIdentityDocument(objResult.getString("identityDocument"));
+                patientsList.add(objPatient);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        ConfigDB.closeConnection();
+        return patientsList;
     }
 }
