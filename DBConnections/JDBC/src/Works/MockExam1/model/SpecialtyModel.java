@@ -99,6 +99,7 @@ public class SpecialtyModel implements CRUD {
         return specialtiesList;
     }
 
+    @Override
     public Object findById(int id) {
         Specialty objSpecialty = null;
         Connection objConnection = ConfigDB.openConnection();

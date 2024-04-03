@@ -6,6 +6,9 @@ public class Physician extends Person {
 
     private int idSpecialty;
 
+    public Physician() {
+    }
+
     public Physician(int id, String name, String lastName, int idSpecialty) {
         super(name, lastName);
         this.id = id;

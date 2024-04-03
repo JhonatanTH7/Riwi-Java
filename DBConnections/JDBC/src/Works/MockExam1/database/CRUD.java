@@ -10,4 +10,6 @@ public interface CRUD {
     public boolean delete(int id);
 
     public List<Object> findAll();
+
+    public Object findById(int id);
 }

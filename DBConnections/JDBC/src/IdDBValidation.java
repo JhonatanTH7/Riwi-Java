@@ -1,5 +1,3 @@
-package Works.MockExam1;
-
 import Works.MockExam1.database.ConfigDB;
 
 import javax.swing.*;

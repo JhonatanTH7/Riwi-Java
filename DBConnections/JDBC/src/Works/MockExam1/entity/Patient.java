@@ -8,6 +8,8 @@ public class Patient extends Person {
     private Date dateOfBirth;
     private String identityDocument;
 
+    public Patient() {
+    }
 
     public Patient(int id, String name, String lastName, Date dateOfBirth, String identityDocument) {
         super(name, lastName);

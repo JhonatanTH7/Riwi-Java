@@ -1,6 +1,5 @@
 package Works.MockExam1.controller;
 
-import Works.MockExam1.IdDBValidation;
 import Works.MockExam1.entity.Specialty;
 import Works.MockExam1.model.SpecialtyModel;
 
@@ -52,13 +51,14 @@ public class SpecialtyController {
     public void delete() {
         String list = this.getAll(this.objSpecialtyModel.findAll());
         try {
-            IdDBValidation idDBValidation = new IdDBValidation();
             int idDelete = Integer.parseInt(
                     JOptionPane.showInputDialog(null, list + "\n Enter the ID of the Specialty you want to delete: "));
             int confirm;
-            if (idDBValidation.validate(idDelete, "specialties")) {
+            Specialty objSpecialty = (Specialty) this.objSpecialtyModel.findById(idDelete);
+
+            if (objSpecialty != null) {
                 confirm = JOptionPane.showConfirmDialog(null,
-                        "Are you sure you want to delete this Specialty? This will delete the Physicians who also have it.");
+                        "Are you sure you want to delete the Specialty  === " + objSpecialty.getName() + " ===? This will delete the Physicians who also have it.");
                 if (confirm == 0) {
                     if (this.objSpecialtyModel.delete(idDelete)) {
                         JOptionPane.showMessageDialog(null,
