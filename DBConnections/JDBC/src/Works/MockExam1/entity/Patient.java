@@ -1,6 +1,6 @@
 package Works.MockExam1.entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Patient extends Person {
 

@@ -75,7 +75,6 @@ public class PhysicianModel implements CRUD {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-
         ConfigDB.closeConnection();
         return isDeleted;
     }
