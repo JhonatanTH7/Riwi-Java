@@ -40,7 +40,25 @@ public class SpecialtyModel implements CRUD {
 
     @Override
     public boolean update(Object object) {
-        return false;
+        String sql = "UPDATE specialties SET name = ?, description = ? WHERE specialties.id = ?;";
+        boolean isUpdated = false;
+        Specialty objSpecialty = (Specialty) object;
+        Connection objConnection = ConfigDB.openConnection();
+        try {
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+            objPrepare.setString(1, objSpecialty.getName());
+            objPrepare.setString(2, objSpecialty.getDescription());
+            objPrepare.setInt(3, objSpecialty.getId());
+            int affectedRows = objPrepare.executeUpdate();
+            if (affectedRows > 0) {
+                isUpdated = true;
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        ConfigDB.closeConnection();
+        return isUpdated;
     }
 
     @Override
@@ -79,5 +97,26 @@ public class SpecialtyModel implements CRUD {
         }
         ConfigDB.closeConnection();
         return specialtiesList;
+    }
+
+    public Object findById(int id) {
+        Specialty objSpecialty = null;
+        Connection objConnection = ConfigDB.openConnection();
+        String sql = "SELECT * FROM specialties WHERE specialties.id = ?;";
+        try {
+            PreparedStatement objPreparedStatement = (PreparedStatement) objConnection.prepareStatement(sql);
+            objPreparedStatement.setInt(1, id);
+            ResultSet objResultSet = objPreparedStatement.executeQuery();
+            while (objResultSet.next()) {
+                objSpecialty = new Specialty();
+                objSpecialty.setId(objResultSet.getInt("id"));
+                objSpecialty.setName(objResultSet.getString("name"));
+                objSpecialty.setDescription(objResultSet.getString("description"));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        ConfigDB.closeConnection();
+        return objSpecialty;
     }
 }
