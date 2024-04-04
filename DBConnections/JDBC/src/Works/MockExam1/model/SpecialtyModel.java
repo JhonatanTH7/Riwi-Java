@@ -89,8 +89,7 @@ public class SpecialtyModel implements CRUD {
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
             ResultSet objResult = objPrepare.executeQuery();
             while (objResult.next()) {
-                Specialty objSpecialty = new Specialty(objResult.getInt("id"), objResult.getString("name"), objResult.getString("description"));
-                specialtiesList.add(objSpecialty);
+                specialtiesList.add(extractResultSet(objResult));
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -107,17 +106,27 @@ public class SpecialtyModel implements CRUD {
         try {
             PreparedStatement objPreparedStatement = (PreparedStatement) objConnection.prepareStatement(sql);
             objPreparedStatement.setInt(1, id);
-            ResultSet objResultSet = objPreparedStatement.executeQuery();
-            while (objResultSet.next()) {
-                objSpecialty = new Specialty();
-                objSpecialty.setId(objResultSet.getInt("id"));
-                objSpecialty.setName(objResultSet.getString("name"));
-                objSpecialty.setDescription(objResultSet.getString("description"));
+            ResultSet objResult = objPreparedStatement.executeQuery();
+            while (objResult.next()) {
+                objSpecialty = (Specialty) extractResultSet(objResult);
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
         ConfigDB.closeConnection();
+        return objSpecialty;
+    }
+
+    public Object extractResultSet(ResultSet objResult) {
+        Specialty objSpecialty = null;
+        try {
+            objSpecialty = new Specialty();
+            objSpecialty.setId(objResult.getInt("id"));
+            objSpecialty.setName(objResult.getString("name"));
+            objSpecialty.setDescription(objResult.getString("description"));
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
         return objSpecialty;
     }
 }

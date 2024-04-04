@@ -16,11 +16,7 @@ public class SpecialtyController {
     public void add() {
         String name = JOptionPane.showInputDialog(null, "Enter the name of the specialty");
         String description = JOptionPane.showInputDialog(null, "Enter the description of the specialty");
-        Specialty objSpecialty = new Specialty();
-        objSpecialty.setName(name);
-        objSpecialty.setDescription(description);
-        objSpecialty = (Specialty) this.objSpecialtyModel.insert(objSpecialty);
-        JOptionPane.showMessageDialog(null, objSpecialty.toString());
+        this.objSpecialtyModel.insert(new Specialty(name, description));
     }
 
     public void update() {
@@ -94,5 +90,9 @@ public class SpecialtyController {
             }
         }
         return list;
+    }
+
+    public String getAllStringList() {
+        return this.getAll(this.objSpecialtyModel.findAll());
     }
 }

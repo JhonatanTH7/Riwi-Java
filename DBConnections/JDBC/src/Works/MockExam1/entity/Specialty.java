@@ -8,8 +8,7 @@ public class Specialty {
     public Specialty() {
     }
 
-    public Specialty(int id, String name, String description) {
-        this.id = id;
+    public Specialty(String name, String description) {
         this.name = name;
         this.description = description;
     }

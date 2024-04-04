@@ -88,12 +88,7 @@ public class PhysicianModel implements CRUD {
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
             ResultSet objResult = objPrepare.executeQuery();
             while (objResult.next()) {
-                Physician objPhysician = new Physician();
-                objPhysician.setId(objResult.getInt("id"));
-                objPhysician.setName(objResult.getString("name"));
-                objPhysician.setLastName(objResult.getString("lastName"));
-                objPhysician.setIdSpecialty(objResult.getInt("idSpecialty"));
-                physiciansList.add(objPhysician);
+                physiciansList.add(extractResultSet(objResult));
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -111,11 +106,7 @@ public class PhysicianModel implements CRUD {
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
             ResultSet objResult = objPrepare.executeQuery();
             while (objResult.next()) {
-                objPhysician = new Physician();
-                objPhysician.setId(objResult.getInt("id"));
-                objPhysician.setIdSpecialty(objResult.getInt("idSpecialty"));
-                objPhysician.setName(objResult.getString("name"));
-                objPhysician.setLastName(objResult.getString("lastName"));
+                objPhysician = (Physician) extractResultSet(objResult);
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -123,4 +114,33 @@ public class PhysicianModel implements CRUD {
         ConfigDB.closeConnection();
         return objPhysician;
     }
+
+    public ResultSet findPhysiciansBySpecialty(String specialty) {
+        ResultSet objResult = null;
+        String sql = "SELECT  physicians.id, physicians.name, physicians.lastName, specialties.name AS specialty FROM physicians INNER JOIN specialties ON physicians.idSpecialty = specialties.id WHERE specialties.name LIKE ?;";
+        Connection objConnection = ConfigDB.openConnection();
+        try {
+            PreparedStatement objPreparedStatement = objConnection.prepareStatement(sql);
+            objPreparedStatement.setString(1, "%" + specialty + "%");
+            objResult = objPreparedStatement.executeQuery();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        ConfigDB.closeConnection();
+        return objResult;
+    }
+
+    public Object extractResultSet(ResultSet objResult) {
+        Physician objPhysician = new Physician();
+        try {
+            objPhysician.setId(objResult.getInt("id"));
+            objPhysician.setIdSpecialty(objResult.getInt("idSpecialty"));
+            objPhysician.setName(objResult.getString("name"));
+            objPhysician.setLastName(objResult.getString("lastName"));
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return objPhysician;
+    }
+
 }

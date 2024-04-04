@@ -1,15 +1,15 @@
 
 CREATE TABLE specialties (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(40) NOT NULL,
-    description VARCHAR(500) NOT NULL
+    name VARCHAR(255) NOT NULL,
+    description TEXT
 );
 
 CREATE TABLE physicians (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(40) NOT NULL,
-    lastName VARCHAR(40) NOT NULL,
-    idSpecialty INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    lastName VARCHAR(255) NOT NULL,
+    idSpecialty INT,
     CONSTRAINT fk_idSpecialty FOREIGN KEY (idSpecialty)
         REFERENCES specialties (id)
         ON DELETE CASCADE
@@ -17,19 +17,19 @@ CREATE TABLE physicians (
 
 CREATE TABLE patients (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(40) NOT NULL,
-    lastName VARCHAR(40) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    lastName VARCHAR(255) NOT NULL,
     dateOfBirth DATE NOT NULL,
-    identityDocument VARCHAR(40) NOT NULL
+    identityDocument VARCHAR(255) UNIQUE NOT NULL
 );
 
 CREATE TABLE appointments (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    idPatient INT NOT NULL,
-    idPhysician INT,
     appointmentDate DATE NOT NULL,
     appointmentTime TIME NOT NULL,
-    reason VARCHAR(40) NOT NULL,
+    reason VARCHAR(255) NOT NULL,
+    idPatient INT,
+    idPhysician INT,
     CONSTRAINT fk_idPatient FOREIGN KEY (idPatient)
         REFERENCES patients (id)
         ON DELETE CASCADE,
@@ -62,10 +62,11 @@ INSERT INTO appointments (idPatient, idPhysician, appointmentDate, appointmentTi
 (3, 4, '2024-04-15', '11:45:00', 'Consulta ginecológica'),
 (4, 2, '2024-04-20', '09:15:00', 'Revisión cardiológica');
 
-DROP TABLE specialties;
+DROP TABLE appointments;
 DROP TABLE physicians;
 DROP TABLE patients;
-DROP TABLE appointments;
+DROP TABLE specialties;
+
 
 SELECT 
     *
@@ -73,3 +74,14 @@ FROM
     appointments;
 
 
+SELECT 
+    physicians.id,
+    physicians.name,
+    physicians.lastName,
+    specialties.name AS specialty
+FROM
+    physicians
+        INNER JOIN
+    specialties ON physicians.idSpecialty = specialties.id
+WHERE
+    specialties.name LIKE '%e%';

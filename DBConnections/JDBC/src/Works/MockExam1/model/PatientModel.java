@@ -129,7 +129,6 @@ public class PatientModel implements CRUD {
     }
 
     public List<Object> findByIdentityDocument(String identityDocumentValidate) {
-        Patient objPatient;
         String sql = "SELECT * FROM patients WHERE patients.identityDocument LIKE ?;";
         List<Object> patientsList = new ArrayList<>();
         Connection objConnection = ConfigDB.openConnection();
@@ -138,13 +137,7 @@ public class PatientModel implements CRUD {
             objPreparedStatement.setString(1, "%" + identityDocumentValidate + "%");
             ResultSet objResult = objPreparedStatement.executeQuery();
             while (objResult.next()) {
-                objPatient = new Patient();
-                objPatient.setId(objResult.getInt("id"));
-                objPatient.setName(objResult.getString("name"));
-                objPatient.setLastName(objResult.getString("lastName"));
-                objPatient.setDateOfBirth(objResult.getDate("dateOfBirth"));
-                objPatient.setIdentityDocument(objResult.getString("identityDocument"));
-                patientsList.add(objPatient);
+                patientsList.add(extractResultSet(objResult));
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -152,4 +145,19 @@ public class PatientModel implements CRUD {
         ConfigDB.closeConnection();
         return patientsList;
     }
+
+    public Object extractResultSet(ResultSet objResult) {
+        Patient objPatient = new Patient();
+        try {
+            objPatient.setId(objResult.getInt("id"));
+            objPatient.setName(objResult.getString("name"));
+            objPatient.setLastName(objResult.getString("lastName"));
+            objPatient.setDateOfBirth(objResult.getDate("dateOfBirth"));
+            objPatient.setIdentityDocument(objResult.getString("identityDocument"));
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return objPatient;
+    }
+
 }
