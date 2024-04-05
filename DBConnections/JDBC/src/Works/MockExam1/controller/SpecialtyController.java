@@ -7,31 +7,30 @@ import javax.swing.*;
 import java.util.List;
 
 public class SpecialtyController {
-    SpecialtyModel objSpecialtyModel;
-
-    public SpecialtyController() {
-        this.objSpecialtyModel = new SpecialtyModel();
+    public SpecialtyModel instanceModel() {
+        return new SpecialtyModel();
     }
+
 
     public void add() {
         String name = JOptionPane.showInputDialog(null, "Enter the name of the specialty");
         String description = JOptionPane.showInputDialog(null, "Enter the description of the specialty");
-        this.objSpecialtyModel.insert(new Specialty(name, description));
+        instanceModel().insert(new Specialty(name, description));
     }
 
     public void update() {
-        String list = this.getAll(this.objSpecialtyModel.findAll());
+        StringBuilder list = this.getAll(instanceModel().findAll());
         try {
             int idUpdate = Integer
                     .parseInt(JOptionPane.showInputDialog(null, list + "\n Enter the ID of the Specialty you want to update: "));
-            Specialty objSpecialty = (Specialty) this.objSpecialtyModel.findById(idUpdate);
+            Specialty objSpecialty = (Specialty) instanceModel().findById(idUpdate);
             if (objSpecialty != null) {
                 String name = JOptionPane.showInputDialog(null, "Enter the new name", objSpecialty.getName());
                 String description = JOptionPane.showInputDialog(null, "Enter the new description",
                         objSpecialty.getDescription());
                 objSpecialty.setName(name);
                 objSpecialty.setDescription(description);
-                if (this.objSpecialtyModel.update(objSpecialty)) {
+                if (instanceModel().update(objSpecialty)) {
                     JOptionPane.showMessageDialog(null, "Specialty Updated successfully");
                 } else {
                     JOptionPane.showMessageDialog(null, "Couldn't update the Specialty");
@@ -45,18 +44,18 @@ public class SpecialtyController {
     }
 
     public void delete() {
-        String list = this.getAll(this.objSpecialtyModel.findAll());
+        StringBuilder list = this.getAll(instanceModel().findAll());
         try {
             int idDelete = Integer.parseInt(
                     JOptionPane.showInputDialog(null, list + "\n Enter the ID of the Specialty you want to delete: "));
             int confirm;
-            Specialty objSpecialty = (Specialty) this.objSpecialtyModel.findById(idDelete);
+            Specialty objSpecialty = (Specialty) instanceModel().findById(idDelete);
 
             if (objSpecialty != null) {
                 confirm = JOptionPane.showConfirmDialog(null,
                         "Are you sure you want to delete the Specialty  === " + objSpecialty.getName() + " ===? This will delete the Physicians who also have it.");
                 if (confirm == 0) {
-                    if (this.objSpecialtyModel.delete(idDelete)) {
+                    if (instanceModel().delete(idDelete)) {
                         JOptionPane.showMessageDialog(null,
                                 "Specialty and the physicians who have it successfully deleted.");
                     } else {
@@ -74,25 +73,20 @@ public class SpecialtyController {
     }
 
     public void getAll() {
-        String list = this.getAll(this.objSpecialtyModel.findAll());
+        StringBuilder list = this.getAll(instanceModel().findAll());
         JOptionPane.showMessageDialog(null, list);
     }
 
-    public String getAll(List<Object> objectsList) {
-        String list = "                                                                ==== Specialties List ==== \n";
+    public StringBuilder getAll(List<Object> objectsList) {
+        StringBuilder list = new StringBuilder("                                                                ==== Specialties List ==== \n");
         if (objectsList.isEmpty()) {
-            list += "No specialties registered";
+            list.append("No specialties registered");
         } else {
             for (Object obj : objectsList) {
                 Specialty objSpecialty = (Specialty) obj;
-                list += "- ID: " + objSpecialty.getId() + " Name: " + objSpecialty.getName() + "   Description: "
-                        + objSpecialty.getDescription() + "\n";
+                list.append("- ID: ").append(objSpecialty.getId()).append(" Name: ").append(objSpecialty.getName()).append("   Description: ").append(objSpecialty.getDescription()).append("\n");
             }
         }
         return list;
-    }
-
-    public String getAllStringList() {
-        return this.getAll(this.objSpecialtyModel.findAll());
     }
 }
