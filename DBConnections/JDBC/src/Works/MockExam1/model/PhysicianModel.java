@@ -16,7 +16,7 @@ public class PhysicianModel implements CRUD {
     @Override
     public Object insert(Object object) {
         Physician objPhysician = (Physician) object;
-        String sql = "INSERT INTO physicians(name,lastName,idSpeciality) VALUES(?,?,?);";
+        String sql = "INSERT INTO physicians(name,lastName,idSpecialty) VALUES(?,?,?);";
         Connection objConnection = ConfigDB.openConnection();
         try {
             PreparedStatement objPrepare = objConnection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);

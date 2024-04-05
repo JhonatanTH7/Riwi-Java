@@ -17,7 +17,26 @@ public class PhysicianController {
     }
 
     public void add() {
-
+        String name = JOptionPane.showInputDialog(null, "Enter the name of the Physician");
+        String lastName = JOptionPane.showInputDialog(null, "Enter the lastname of the Physician");
+        Object[] options = Util.listToArray(new SpecialtyModel().findAll());
+        if (options.length > 0) {
+            Specialty selectedOption = (Specialty) JOptionPane.showInputDialog(
+                    null,
+                    "Select a Specialty:\n",
+                    "Selecting a Specialty",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
+            if (selectedOption == null) {
+                JOptionPane.showMessageDialog(null, "No option selected");
+            } else {
+                System.out.println(instanceModel().insert(new Physician(name, lastName, selectedOption.getId())));
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "There is no specialties yet");
+        }
     }
 
     public void update() {
@@ -25,14 +44,41 @@ public class PhysicianController {
     }
 
     public void delete() {
+        Object[] options = Util.listToArray(instanceModel().findAll());
+        if (options.length > 0) {
+            Physician selectedOption = (Physician) JOptionPane.showInputDialog(
+                    null,
+                    "Select the Physician that you want to delete:\n",
+                    "Deleting a Physician",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
+            if (selectedOption == null) {
+                JOptionPane.showMessageDialog(null, "No option selected");
+            } else {
 
+                int confirm = JOptionPane.showConfirmDialog(null,
+                        "Are you sure you want to delete the Physician " + selectedOption.getName() + " " + selectedOption.getLastName());
+                if (confirm == 0) {
+                    if (instanceModel().delete(selectedOption.getId())) {
+                        JOptionPane.showMessageDialog(null, "Physician successfully deleted");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Couldn't delete the Physician");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No Physician was deleted");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "There is no Physicians yet");
+        }
     }
 
     public void getPhysiciansBySpecialty() {
-        SpecialtyModel objSpecialtyModel = new SpecialtyModel();
         List<String> filteredList;
         StringBuilder list = new StringBuilder("                     =========== Results =========== \n");
-        Object[] objects = Util.listToArray(objSpecialtyModel.findAll());
+        Object[] objects = Util.listToArray(new SpecialtyModel().findAll());
         String[] options = new String[objects.length];
         int i = 0;
         for (Object obj : objects) {

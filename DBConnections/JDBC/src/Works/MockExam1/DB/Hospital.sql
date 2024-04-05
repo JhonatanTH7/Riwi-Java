@@ -75,13 +75,11 @@ FROM
 
 
 SELECT 
-    physicians.id,
-    physicians.name,
-    physicians.lastName,
+    physicians.*,
     specialties.name AS specialty
 FROM
     physicians
         INNER JOIN
     specialties ON physicians.idSpecialty = specialties.id
 WHERE
-    specialties.name LIKE '%e%';
+    specialties.name = "Pediatria";

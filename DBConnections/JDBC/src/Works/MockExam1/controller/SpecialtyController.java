@@ -15,7 +15,7 @@ public class SpecialtyController {
     public void add() {
         String name = JOptionPane.showInputDialog(null, "Enter the name of the specialty");
         String description = JOptionPane.showInputDialog(null, "Enter the description of the specialty");
-        instanceModel().insert(new Specialty(name, description));
+        System.out.println(instanceModel().insert(new Specialty(name, description)));
     }
 
     public void update() {
