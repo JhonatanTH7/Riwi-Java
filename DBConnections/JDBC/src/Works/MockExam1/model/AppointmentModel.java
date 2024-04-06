@@ -5,10 +5,7 @@ import Works.MockExam1.database.ConfigDB;
 import Works.MockExam1.entity.Appointment;
 
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,12 +88,41 @@ public class AppointmentModel implements CRUD {
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
             ResultSet objResult = objPrepare.executeQuery();
             while (objResult.next()) {
-                appointmentsList.add(new Appointment(objResult.getInt("id"), objResult.getDate("appointmentDate"), objResult.getTime("appointmentTime"), objResult.getString("reason"), objResult.getInt("idPatient"), objResult.getInt("idPhysician")));
+                appointmentsList.add(extractResultSet(objResult));
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
         ConfigDB.closeConnection();
         return appointmentsList;
+    }
+
+    public List<Object> findByDate(Date searchedDate) {
+        List<Object> resultsList = new ArrayList<>();
+        String sql = "SELECT * FROM appointments WHERE appointments.appointmentDate = ?;";
+        Connection objConnection = ConfigDB.openConnection();
+        try {
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+            objPrepare.setDate(1, searchedDate);
+            ResultSet objResult = objPrepare.executeQuery();
+            while (objResult.next()) {
+                resultsList.add(extractResultSet(objResult));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        ConfigDB.closeConnection();
+        return resultsList;
+    }
+
+    public Appointment extractResultSet(ResultSet objResult) {
+        Appointment objAppointment = null;
+        try {
+            objAppointment = new Appointment(objResult.getInt("id"), objResult.getDate("appointmentDate"), objResult.getTime("appointmentTime"), objResult.getString("reason"), objResult.getInt("idPatient"), objResult.getInt("idPhysician"));
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return objAppointment;
     }
 }

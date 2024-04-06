@@ -63,7 +63,7 @@ public class PhysicianController {
                             JOptionPane.QUESTION_MESSAGE,
                             null,
                             optionsSpecialty,
-                            optionsSpecialty[selectedOption.getIdSpecialty() - 1]);
+                            optionsSpecialty[0]);
                     if (selectedSpecialty == null) {
                         JOptionPane.showMessageDialog(null, "No option selected");
                     } else {

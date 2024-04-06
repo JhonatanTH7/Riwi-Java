@@ -65,6 +65,73 @@ public class AppointmentController {
     }
 
     public void update() {
+        Object[] options = instanceModel().findAll().toArray();
+        if (options.length > 0) {
+            Appointment appointmentSelected = (Appointment) JOptionPane.showInputDialog(
+                    null,
+                    "Select the Appointment that you want to update:\n",
+                    "Updating an Appointment",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
+            if (appointmentSelected == null) {
+                JOptionPane.showMessageDialog(null, "No option selected");
+            } else {
+                try {
+                    appointmentSelected.setAppointmentDate(Date.valueOf(JOptionPane.showInputDialog(null, "Enter the Date of the Appointment (YYYY-MM-DD)", appointmentSelected.getAppointmentDate())));
+                    appointmentSelected.setAppointmentTime(Time.valueOf(JOptionPane.showInputDialog(null, "Enter the hour of the Appointment (HH:MM:SS)", appointmentSelected.getAppointmentTime())));
+                    appointmentSelected.setReason(JOptionPane.showInputDialog(null, "Enter the reason of the Appointment", appointmentSelected.getReason()));
+                    Object[] optionsPatient = new PatientModel().findAll().toArray();
+                    if (optionsPatient.length > 0) {
+                        Patient patientSelected = (Patient) JOptionPane.showInputDialog(
+                                null,
+                                "Select the new Patient:\n",
+                                "Selecting a Patient",
+                                JOptionPane.QUESTION_MESSAGE,
+                                null,
+                                optionsPatient,
+                                optionsPatient[0]);
+                        if (patientSelected == null) {
+                            JOptionPane.showMessageDialog(null, "No option selected");
+                        } else {
+                            Object[] optionsPhysician = new PhysicianModel().findAll().toArray();
+                            if (optionsPhysician.length > 0) {
+                                Physician physicianSelected = (Physician) JOptionPane.showInputDialog(
+                                        null,
+                                        "Select the new Physician:\n",
+                                        "Selecting a Physician",
+                                        JOptionPane.QUESTION_MESSAGE,
+                                        null,
+                                        optionsPhysician,
+                                        optionsPhysician[0]);
+                                if (physicianSelected == null) {
+                                    JOptionPane.showMessageDialog(null, "No option selected");
+                                } else {
+                                    appointmentSelected.setIdPatient(patientSelected.getId());
+                                    appointmentSelected.setIdPhysician(physicianSelected.getId());
+                                    if (instanceModel().update(appointmentSelected)) {
+                                        JOptionPane.showMessageDialog(null, "Appointment Updated successfully");
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "Couldn't update the Appointment");
+                                    }
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(null, "There is no Physicians yet");
+                            }
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "There is no Patients yet");
+                    }
+
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error >> Not a valid format");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "There is no Appointments yet");
+        }
     }
 
     public void delete() {
@@ -117,5 +184,14 @@ public class AppointmentController {
     }
 
     public void getByDate() {
+        StringBuilder list = new StringBuilder("                                                                           ==== Results List ====                                                                           \n");
+        try {
+            Date dateSearched = Date.valueOf(JOptionPane.showInputDialog(null, "Enter the Date of the Appointments you want to search for (YYYY-MM-DD)"));
+            list.append("Filtered by Date: ").append(dateSearched).append("\n");
+            list.append(getAll(instanceModel().findByDate(dateSearched)));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error >> Not a valid format");
+        }
+        JOptionPane.showMessageDialog(null, list);
     }
 }

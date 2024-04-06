@@ -68,19 +68,19 @@ DROP TABLE physicians;
 DROP TABLE patients;
 DROP TABLE specialties;
 
-
 SELECT 
-    *
-FROM
-    appointments;
-
-
-SELECT 
-    physicians.*,
-    specialties.name AS specialty
+    physicians.*, specialties.name AS specialty
 FROM
     physicians
         INNER JOIN
     specialties ON physicians.idSpecialty = specialties.id
 WHERE
-    specialties.name = "Pediatria";
+    specialties.name = 'Pediatria';
+    
+    SELECT 
+    *
+FROM
+    appointments
+WHERE
+    appointments.appointmentDate = '2024-04-15';
+    
