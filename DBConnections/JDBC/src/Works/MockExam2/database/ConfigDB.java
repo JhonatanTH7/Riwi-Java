@@ -10,10 +10,10 @@ public class ConfigDB {
     public static Connection openConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://bujzhsftxday9f2tu5cn-mysql.services.clever-cloud.com:3306/bujzhsftxday9f2tu5cn";
-            String user = "u4cfu9qh3kdszyju";
-            String password = "5dVuakHvxLwwPmAb2p1l";
-            objConnection = (Connection) DriverManager.getConnection(url, user, password);
+            String url = "jdbc:mysql://bilmddpclhov4fsshz44-mysql.services.clever-cloud.com:3306/bilmddpclhov4fsshz44";
+            String user = "unqiaolnxraqbdxi";
+            String password = "qLKpz3Xjluh6PLEshgDn";
+            objConnection = DriverManager.getConnection(url, user, password);
             System.out.println("Properly connected to DB");
         } catch (ClassNotFoundException e) {
             System.out.println("Error >> Driver not found");
