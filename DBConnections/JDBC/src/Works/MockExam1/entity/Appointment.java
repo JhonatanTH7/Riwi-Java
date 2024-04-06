@@ -5,16 +5,30 @@ import java.sql.Date;
 
 public class Appointment {
     private int id;
-    private int idPatient;
-    private int idPhysician;
     private Date appointmentDate;
     private Time appointmentTime;
+    private String reason;
+    private int idPatient;
+    private int idPhysician;
 
-    public Appointment(int idPatient, int idPhysician, Date appointmentDate, Time appointmentTime) {
-        this.idPatient = idPatient;
-        this.idPhysician = idPhysician;
+    public Appointment() {
+    }
+
+    public Appointment(Date appointmentDate, Time appointmentTime, String reason, int idPatient, int idPhysician) {
         this.appointmentDate = appointmentDate;
         this.appointmentTime = appointmentTime;
+        this.reason = reason;
+        this.idPatient = idPatient;
+        this.idPhysician = idPhysician;
+    }
+
+    public Appointment(int id, Date appointmentDate, Time appointmentTime, String reason, int idPatient, int idPhysician) {
+        this.id = id;
+        this.appointmentDate = appointmentDate;
+        this.appointmentTime = appointmentTime;
+        this.reason = reason;
+        this.idPatient = idPatient;
+        this.idPhysician = idPhysician;
     }
 
     public int getId() {
@@ -23,22 +37,6 @@ public class Appointment {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getIdPatient() {
-        return idPatient;
-    }
-
-    public void setIdPatient(int idPatient) {
-        this.idPatient = idPatient;
-    }
-
-    public int getIdPhysician() {
-        return idPhysician;
-    }
-
-    public void setIdPhysician(int idPhysician) {
-        this.idPhysician = idPhysician;
     }
 
     public Date getAppointmentDate() {
@@ -57,13 +55,37 @@ public class Appointment {
         this.appointmentTime = appointmentTime;
     }
 
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public int getIdPatient() {
+        return idPatient;
+    }
+
+    public void setIdPatient(int idPatient) {
+        this.idPatient = idPatient;
+    }
+
+    public int getIdPhysician() {
+        return idPhysician;
+    }
+
+    public void setIdPhysician(int idPhysician) {
+        this.idPhysician = idPhysician;
+    }
+
     @Override
     public String toString() {
-        return
-                "- ID: " + id +
-                        "  IdPatient: " + idPatient +
-                        "  IdPhysician: " + idPhysician +
-                        "  AppointmentDate: " + appointmentDate +
-                        "  AppointmentTime: " + appointmentTime;
+        return "  - ID: " + this.id +
+                "  AppointmentDate: " + appointmentDate +
+                "  AppointmentTime: " + appointmentTime +
+                "  Reason: " + reason +
+                "  IdPatient: " + idPatient +
+                "  IdPhysician: " + idPhysician;
     }
 }

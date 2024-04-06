@@ -33,9 +33,9 @@ public class Physician extends Person {
     @Override
     public String toString() {
         return
-                "- ID: " + id +
-                        "  name: " + super.getName() +
-                        "  lastName: " + super.getLastName() +
+                "  - ID: " + id +
+                        "  Name: " + super.getName() +
+                        "  LastName: " + super.getLastName() +
                         "  IdSpecialty: " + idSpecialty;
     }
 }

@@ -20,8 +20,7 @@ public class PatientController {
             String identityDocument = JOptionPane.showInputDialog(null, "Enter the identity document of the Patient");
             System.out.println(instanceModel().insert(new Patient(name, lastName, dateOfBirth, identityDocument)));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error >> Not a valid Date format");
-
+            JOptionPane.showMessageDialog(null, "Error >> " + e.getMessage());
         }
     }
 
@@ -75,7 +74,7 @@ public class PatientController {
             } else {
 
                 int confirm = JOptionPane.showConfirmDialog(null,
-                        "Are you sure you want to delete the Patient " + selectedOption.getName() + " " + selectedOption.getLastName());
+                        "Are you sure you want to delete the Patient?" + selectedOption.getName() + " " + selectedOption.getLastName());
                 if (confirm == 0) {
                     if (instanceModel().delete(selectedOption.getId())) {
                         JOptionPane.showMessageDialog(null, "Patient successfully deleted");
@@ -87,7 +86,7 @@ public class PatientController {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(null, "There is no Patient yet");
+            JOptionPane.showMessageDialog(null, "There is no Patients yet");
         }
     }
 

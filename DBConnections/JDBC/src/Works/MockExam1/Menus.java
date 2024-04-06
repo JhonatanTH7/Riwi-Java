@@ -1,5 +1,6 @@
 package Works.MockExam1;
 
+import Works.MockExam1.controller.AppointmentController;
 import Works.MockExam1.controller.PatientController;
 import Works.MockExam1.controller.PhysicianController;
 import Works.MockExam1.controller.SpecialtyController;
@@ -141,6 +142,7 @@ public class Menus {
     }
 
     public void appointmentMenu() {
+        AppointmentController objAppointmentController = new AppointmentController();
         String option2;
         do {
             option2 = JOptionPane.showInputDialog(null, """
@@ -159,19 +161,19 @@ public class Menus {
                     """);
             switch (option2) {
                 case "1":
-
+                    objAppointmentController.getAll();
                     break;
                 case "2":
-
+                    objAppointmentController.add();
                     break;
                 case "3":
-
+                    objAppointmentController.update();
                     break;
                 case "4":
-
+                    objAppointmentController.delete();
                     break;
                 case "5":
-
+                    objAppointmentController.getByDate();
                     break;
                 case "6":
                     JOptionPane.showMessageDialog(null, "Going back to main menu");

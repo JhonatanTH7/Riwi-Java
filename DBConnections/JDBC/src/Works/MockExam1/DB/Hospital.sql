@@ -35,6 +35,7 @@ CREATE TABLE appointments (
         ON DELETE CASCADE,
     CONSTRAINT fk_idPhysician FOREIGN KEY (idPhysician)
         REFERENCES physicians (id)
+        ON DELETE CASCADE
 );
 
 

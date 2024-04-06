@@ -101,7 +101,7 @@ public class PhysicianController {
             } else {
 
                 int confirm = JOptionPane.showConfirmDialog(null,
-                        "Are you sure you want to delete the Physician " + selectedOption.getName() + " " + selectedOption.getLastName());
+                        "Are you sure you want to delete the Physician?" + selectedOption.getName() + " " + selectedOption.getLastName());
                 if (confirm == 0) {
                     if (instanceModel().delete(selectedOption.getId())) {
                         JOptionPane.showMessageDialog(null, "Physician successfully deleted");

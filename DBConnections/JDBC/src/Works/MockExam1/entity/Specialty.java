@@ -40,8 +40,8 @@ public class Specialty {
     @Override
     public String toString() {
         return
-                "- ID: " + id +
+                "  - ID: " + id +
                         "  Name: " + name +
-                        "  description: " + description;
+                        "  Description: " + description;
     }
 }
