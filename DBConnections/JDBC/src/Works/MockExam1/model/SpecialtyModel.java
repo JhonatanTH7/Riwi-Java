@@ -98,13 +98,12 @@ public class SpecialtyModel implements CRUD {
         return specialtiesList;
     }
 
-    @Override
     public Object findById(int id) {
         Specialty objSpecialty = null;
         Connection objConnection = ConfigDB.openConnection();
         String sql = "SELECT * FROM specialties WHERE specialties.id = ?;";
         try {
-            PreparedStatement objPreparedStatement = (PreparedStatement) objConnection.prepareStatement(sql);
+            PreparedStatement objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setInt(1, id);
             ResultSet objResult = objPreparedStatement.executeQuery();
             while (objResult.next()) {

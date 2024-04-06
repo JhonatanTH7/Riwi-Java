@@ -10,8 +10,7 @@ public class Appointment {
     private Date appointmentDate;
     private Time appointmentTime;
 
-    public Appointment(int id, int idPatient, int idPhysician, Date appointmentDate, Time appointmentTime) {
-        this.id = id;
+    public Appointment(int idPatient, int idPhysician, Date appointmentDate, Time appointmentTime) {
         this.idPatient = idPatient;
         this.idPhysician = idPhysician;
         this.appointmentDate = appointmentDate;

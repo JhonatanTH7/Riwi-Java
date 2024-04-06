@@ -1,5 +1,6 @@
 package Works.MockExam1;
 
+import Works.MockExam1.controller.PatientController;
 import Works.MockExam1.controller.PhysicianController;
 import Works.MockExam1.controller.SpecialtyController;
 
@@ -8,7 +9,7 @@ import javax.swing.*;
 public class Menus {
     public void specialtyMenu() {
         SpecialtyController objSpecialtyController = new SpecialtyController();
-        String option2 = "";
+        String option2;
         do {
             option2 = JOptionPane.showInputDialog(null, """
 
@@ -53,7 +54,7 @@ public class Menus {
 
     public void physicianMenu() {
         PhysicianController objPhysicianController = new PhysicianController();
-        String option2 = "";
+        String option2;
         do {
             option2 = JOptionPane.showInputDialog(null, """
 
@@ -96,17 +97,18 @@ public class Menus {
     }
 
     public void patientMenu() {
-        String option2 = "";
+        PatientController objPatientController = new PatientController();
+        String option2;
         do {
             option2 = JOptionPane.showInputDialog(null, """
 
-                        PHYSICIANS MENU
+                        PATIENTS MENU
 
-                    1. Show all Physicians
-                    2. Add Physician
-                    3. Update Physician
-                    4. Delete Physician
-                    5. Show all Physicians in a Specialty
+                    1. Show all Patients
+                    2. Add Patient
+                    3. Update Patient
+                    4. Delete Patient
+                    5. Search Patient by identity document
                     6. Exit
 
                     Choose an option:
@@ -114,6 +116,7 @@ public class Menus {
                     """);
             switch (option2) {
                 case "1":
+                    objPatientController.getAll();
                     break;
                 case "2":
                     break;
@@ -134,7 +137,7 @@ public class Menus {
     }
 
     public void appointmentMenu() {
-        String option2 = "";
+        String option2;
         do {
             option2 = JOptionPane.showInputDialog(null, """
 

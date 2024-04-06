@@ -73,8 +73,7 @@ public class SpecialtyController {
     }
 
     public void getAll() {
-        StringBuilder list = this.getAll(instanceModel().findAll());
-        JOptionPane.showMessageDialog(null, list);
+        JOptionPane.showMessageDialog(null, this.getAll(instanceModel().findAll()));
     }
 
     public StringBuilder getAll(List<Object> objectsList) {

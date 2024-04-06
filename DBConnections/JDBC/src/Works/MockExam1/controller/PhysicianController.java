@@ -40,7 +40,50 @@ public class PhysicianController {
     }
 
     public void update() {
-
+        Object[] options = Util.listToArray(instanceModel().findAll());
+        if (options.length > 0) {
+            Physician selectedOption = (Physician) JOptionPane.showInputDialog(
+                    null,
+                    "Select the Physician that you want to update:\n",
+                    "Updating a Physician",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
+            if (selectedOption == null) {
+                JOptionPane.showMessageDialog(null, "No option selected");
+            } else {
+                String name = JOptionPane.showInputDialog(null, "Enter the new name of the Physician", selectedOption.getName());
+                String lastName = JOptionPane.showInputDialog(null, "Enter the new lastname of the Physician", selectedOption.getLastName());
+                Object[] optionsSpecialty = Util.listToArray(new SpecialtyModel().findAll());
+                if (optionsSpecialty.length > 0) {
+                    Specialty selectedSpecialty = (Specialty) JOptionPane.showInputDialog(
+                            null,
+                            "Select the new Specialty:\n",
+                            "Selecting a Specialty",
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            optionsSpecialty,
+                            optionsSpecialty[selectedOption.getIdSpecialty() - 1]);
+                    if (selectedSpecialty == null) {
+                        JOptionPane.showMessageDialog(null, "No option selected");
+                    } else {
+                        selectedOption.setName(name);
+                        selectedOption.setLastName(lastName);
+                        selectedOption.setIdSpecialty(selectedSpecialty.getId());
+                        if (instanceModel().update(selectedOption)) {
+                            JOptionPane.showMessageDialog(null, "Physician Updated successfully");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Couldn't update the Physician");
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "There is no specialties yet");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "There is no Physicians yet");
+        }
     }
 
     public void delete() {
@@ -78,16 +121,9 @@ public class PhysicianController {
     public void getPhysiciansBySpecialty() {
         List<String> filteredList;
         StringBuilder list = new StringBuilder("                     =========== Results =========== \n");
-        Object[] objects = Util.listToArray(new SpecialtyModel().findAll());
-        String[] options = new String[objects.length];
-        int i = 0;
-        for (Object obj : objects) {
-            Specialty objSpecialty = (Specialty) obj;
-            options[i++] = objSpecialty.getName();
-        }
-
+        Object[] options = Util.listToArray(new SpecialtyModel().findAll());
         if (options.length > 0) {
-            String selectedOption = (String) JOptionPane.showInputDialog(
+            Specialty selectedOption = (Specialty) JOptionPane.showInputDialog(
                     null,
                     "Select a Specialty:\n",
                     "Filtering by Specialty",
@@ -98,7 +134,7 @@ public class PhysicianController {
             if (selectedOption == null) {
                 list.append("No option selected");
             } else {
-                filteredList = instanceModel().findPhysiciansBySpecialty(selectedOption);
+                filteredList = instanceModel().findPhysiciansBySpecialty(selectedOption.getName());
                 if (filteredList.isEmpty()) {
                     list.append("There is no Physicians in this Specialty yet");
                 } else {
@@ -114,11 +150,10 @@ public class PhysicianController {
     }
 
     public void getAll() {
-        String list = this.getAll(instanceModel().findAll());
-        JOptionPane.showMessageDialog(null, list);
+        JOptionPane.showMessageDialog(null, this.getAll(instanceModel().findAll()));
     }
 
-    public String getAll(List<Object> objectsList) {
+    public StringBuilder getAll(List<Object> objectsList) {
         StringBuilder list = new StringBuilder("                     ==== Physicians List ==== \n");
         if (objectsList.isEmpty()) {
             list.append("No Physicians registered");
@@ -128,7 +163,7 @@ public class PhysicianController {
                 list.append("- ID: ").append(objPhysician.getId()).append(" Name: ").append(objPhysician.getName()).append("   Last name: ").append(objPhysician.getLastName()).append("  ID Specialty: ").append(objPhysician.getIdSpecialty()).append("\n");
             }
         }
-        return list.toString();
+        return list;
     }
 }
 

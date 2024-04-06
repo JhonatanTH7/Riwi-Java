@@ -83,7 +83,7 @@ public class PatientModel implements CRUD {
 
     @Override
     public List<Object> findAll() {
-        String sql = "SELECT * FROM patients ORDER BY patients.id = ?;";
+        String sql = "SELECT * FROM patients ORDER BY patients.id ASC;";
         List<Object> patientsList = new ArrayList<>();
         Connection objConnection = ConfigDB.openConnection();
         try {
@@ -103,29 +103,6 @@ public class PatientModel implements CRUD {
         }
         ConfigDB.closeConnection();
         return patientsList;
-    }
-
-    @Override
-    public Object findById(int id) {
-        String sql = "SELECT FROM patients WHERE patients.id = ?;";
-        Patient objPatient = null;
-        Connection objConnection = ConfigDB.openConnection();
-        try {
-            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
-            ResultSet objResult = objPrepare.executeQuery();
-            while (objResult.next()) {
-                objPatient = new Patient();
-                objPatient.setId(objResult.getInt("id"));
-                objPatient.setName(objResult.getString("name"));
-                objPatient.setLastName(objResult.getString("lastName"));
-                objPatient.setDateOfBirth(objResult.getDate("dateOfBirth"));
-                objPatient.setIdentityDocument(objResult.getString("identityDocument"));
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-        ConfigDB.closeConnection();
-        return objPatient;
     }
 
     public List<Object> findByIdentityDocument(String identityDocumentValidate) {

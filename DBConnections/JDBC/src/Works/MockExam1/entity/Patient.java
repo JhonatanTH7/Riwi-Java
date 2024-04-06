@@ -11,6 +11,12 @@ public class Patient extends Person {
     public Patient() {
     }
 
+    public Patient(String name, String lastName, Date dateOfBirth, String identityDocument) {
+        super(name, lastName);
+        this.dateOfBirth = dateOfBirth;
+        this.identityDocument = identityDocument;
+    }
+
     public Patient(int id, String name, String lastName, Date dateOfBirth, String identityDocument) {
         super(name, lastName);
         this.id = id;
