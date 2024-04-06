@@ -17,13 +17,6 @@ public class Patient extends Person {
         this.identityDocument = identityDocument;
     }
 
-    public Patient(int id, String name, String lastName, Date dateOfBirth, String identityDocument) {
-        super(name, lastName);
-        this.id = id;
-        this.dateOfBirth = dateOfBirth;
-        this.identityDocument = identityDocument;
-    }
-
     public int getId() {
         return id;
     }
@@ -50,12 +43,11 @@ public class Patient extends Person {
 
     @Override
     public String toString() {
-        return "Patient{" +
-                "id=" + id +
-                ", name='" + super.getName() +
-                ", lastName='" + super.getLastName() +
-                ", dateOfBirth=" + dateOfBirth +
-                ", identityDocument='" + identityDocument +
-                '}';
+        return
+                "- ID: " + id +
+                        "  Name: " + super.getName() +
+                        "  LastName: " + super.getLastName() +
+                        "  DateOfBirth: " + dateOfBirth +
+                        "  IdentityDocument: " + identityDocument;
     }
 }

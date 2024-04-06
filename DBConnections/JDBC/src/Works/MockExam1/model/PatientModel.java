@@ -90,13 +90,7 @@ public class PatientModel implements CRUD {
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);
             ResultSet objResult = objPrepare.executeQuery();
             while (objResult.next()) {
-                Patient objPatient = new Patient();
-                objPatient.setId(objResult.getInt("id"));
-                objPatient.setName(objResult.getString("name"));
-                objPatient.setLastName(objResult.getString("lastName"));
-                objPatient.setDateOfBirth(objResult.getDate("dateOfBirth"));
-                objPatient.setIdentityDocument(objResult.getString("identityDocument"));
-                patientsList.add(objPatient);
+                patientsList.add(extractResultSet(objResult));
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -136,5 +130,4 @@ public class PatientModel implements CRUD {
         }
         return objPatient;
     }
-
 }

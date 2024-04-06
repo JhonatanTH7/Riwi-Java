@@ -53,7 +53,7 @@ public class SpecialtyController {
 
             if (objSpecialty != null) {
                 confirm = JOptionPane.showConfirmDialog(null,
-                        "Are you sure you want to delete the Specialty  === " + objSpecialty.getName() + " ===? This will delete the Physicians who also have it.");
+                        "Are you sure you want to delete the Specialty  === " + objSpecialty.getName() + " ===? This will delete all the information related to it.");
                 if (confirm == 0) {
                     if (instanceModel().delete(idDelete)) {
                         JOptionPane.showMessageDialog(null,
@@ -77,13 +77,13 @@ public class SpecialtyController {
     }
 
     public StringBuilder getAll(List<Object> objectsList) {
-        StringBuilder list = new StringBuilder("                                                                ==== Specialties List ==== \n");
+        StringBuilder list = new StringBuilder("                                                                ==== Specialties List ====                                                                \n");
         if (objectsList.isEmpty()) {
             list.append("No specialties registered");
         } else {
             for (Object obj : objectsList) {
                 Specialty objSpecialty = (Specialty) obj;
-                list.append("- ID: ").append(objSpecialty.getId()).append(" Name: ").append(objSpecialty.getName()).append("   Description: ").append(objSpecialty.getDescription()).append("\n");
+                list.append(objSpecialty.toString()).append("\n");
             }
         }
         return list;

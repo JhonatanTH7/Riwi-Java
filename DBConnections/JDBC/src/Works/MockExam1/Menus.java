@@ -119,12 +119,16 @@ public class Menus {
                     objPatientController.getAll();
                     break;
                 case "2":
+                    objPatientController.add();
                     break;
                 case "3":
+                    objPatientController.update();
                     break;
                 case "4":
+                    objPatientController.delete();
                     break;
                 case "5":
+                    objPatientController.getByIdentityDocument();
                     break;
                 case "6":
                     JOptionPane.showMessageDialog(null, "Going back to main menu");

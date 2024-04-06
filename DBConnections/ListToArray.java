@@ -1,8 +1,6 @@
-package Works.MockExam1.Utilities;
-
 import java.util.List;
 
-public class Util {
+public class ListToArray {
     public static <T> T[] listToArray(List<T> list) {
         T[] vector;
         vector = (T[]) new Object[list.size()];

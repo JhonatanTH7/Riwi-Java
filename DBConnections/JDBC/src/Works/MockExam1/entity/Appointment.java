@@ -59,12 +59,11 @@ public class Appointment {
 
     @Override
     public String toString() {
-        return "Appointment{" +
-                "id=" + id +
-                ", idPatient=" + idPatient +
-                ", idPhysician=" + idPhysician +
-                ", appointmentDate=" + appointmentDate +
-                ", appointmentTime=" + appointmentTime +
-                '}';
+        return
+                "- ID: " + id +
+                        "  IdPatient: " + idPatient +
+                        "  IdPhysician: " + idPhysician +
+                        "  AppointmentDate: " + appointmentDate +
+                        "  AppointmentTime: " + appointmentTime;
     }
 }

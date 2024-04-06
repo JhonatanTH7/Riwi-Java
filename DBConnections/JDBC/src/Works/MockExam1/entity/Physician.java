@@ -32,11 +32,10 @@ public class Physician extends Person {
 
     @Override
     public String toString() {
-        return "Physician{" +
-                "id=" + id +
-                ", name='" + super.getName() +
-                ", lastName='" + super.getLastName() +
-                ", idSpecialty=" + idSpecialty +
-                '}';
+        return
+                "- ID: " + id +
+                        "  name: " + super.getName() +
+                        "  lastName: " + super.getLastName() +
+                        "  IdSpecialty: " + idSpecialty;
     }
 }

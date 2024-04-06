@@ -1,6 +1,6 @@
 package Works.MockExam1.controller;
 
-import Works.MockExam1.Utilities.Util;
+import Util;
 import Works.MockExam1.entity.Physician;
 import Works.MockExam1.entity.Specialty;
 import Works.MockExam1.model.PhysicianModel;
@@ -120,7 +120,7 @@ public class PhysicianController {
 
     public void getPhysiciansBySpecialty() {
         List<String> filteredList;
-        StringBuilder list = new StringBuilder("                     =========== Results =========== \n");
+        StringBuilder list = new StringBuilder("                     =========== Results ===========                     \n");
         Object[] options = Util.listToArray(new SpecialtyModel().findAll());
         if (options.length > 0) {
             Specialty selectedOption = (Specialty) JOptionPane.showInputDialog(
@@ -154,13 +154,13 @@ public class PhysicianController {
     }
 
     public StringBuilder getAll(List<Object> objectsList) {
-        StringBuilder list = new StringBuilder("                     ==== Physicians List ==== \n");
+        StringBuilder list = new StringBuilder("                     ==== Physicians List ====                     \n");
         if (objectsList.isEmpty()) {
             list.append("No Physicians registered");
         } else {
             for (Object obj : objectsList) {
                 Physician objPhysician = (Physician) obj;
-                list.append("- ID: ").append(objPhysician.getId()).append(" Name: ").append(objPhysician.getName()).append("   Last name: ").append(objPhysician.getLastName()).append("  ID Specialty: ").append(objPhysician.getIdSpecialty()).append("\n");
+                list.append(objPhysician.toString()).append("\n");
             }
         }
         return list;
