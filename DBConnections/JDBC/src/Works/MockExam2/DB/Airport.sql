@@ -19,13 +19,13 @@ CREATE TABLE passengers (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     lastName VARCHAR(255) NOT NULL,
-    identityDocument VARCHAR(255)
+    identityDocument VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE reservations (
     id INT PRIMARY KEY AUTO_INCREMENT,
     reservationDate DATE NOT NULL,
-    seat VARCHAR(2),
+    seat VARCHAR(2) NOT NULL,
     idPassenger INT,
     idFlight INT,
     CONSTRAINT fk_idPassenger FOREIGN KEY (idPassenger)
