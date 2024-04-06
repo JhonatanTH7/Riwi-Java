@@ -145,13 +145,13 @@ public class Menus {
         do {
             option2 = JOptionPane.showInputDialog(null, """
 
-                        PHYSICIANS MENU
+                        APPOINTMENTS MENU
 
-                    1. Show all Physicians
-                    2. Add Physician
-                    3. Update Physician
-                    4. Delete Physician
-                    5. Show all Physicians in a Specialty
+                    1. Show all Appointments
+                    2. Add Appointment
+                    3. Update Appointment
+                    4. Delete Appointment
+                    5. Search Appointments by Date
                     6. Exit
 
                     Choose an option:

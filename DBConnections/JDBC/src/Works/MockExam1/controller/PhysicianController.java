@@ -1,6 +1,5 @@
 package Works.MockExam1.controller;
 
-import Util;
 import Works.MockExam1.entity.Physician;
 import Works.MockExam1.entity.Specialty;
 import Works.MockExam1.model.PhysicianModel;
@@ -19,7 +18,7 @@ public class PhysicianController {
     public void add() {
         String name = JOptionPane.showInputDialog(null, "Enter the name of the Physician");
         String lastName = JOptionPane.showInputDialog(null, "Enter the lastname of the Physician");
-        Object[] options = Util.listToArray(new SpecialtyModel().findAll());
+        Object[] options = new SpecialtyModel().findAll().toArray();
         if (options.length > 0) {
             Specialty selectedOption = (Specialty) JOptionPane.showInputDialog(
                     null,
@@ -40,7 +39,7 @@ public class PhysicianController {
     }
 
     public void update() {
-        Object[] options = Util.listToArray(instanceModel().findAll());
+        Object[] options = instanceModel().findAll().toArray();
         if (options.length > 0) {
             Physician selectedOption = (Physician) JOptionPane.showInputDialog(
                     null,
@@ -55,7 +54,7 @@ public class PhysicianController {
             } else {
                 String name = JOptionPane.showInputDialog(null, "Enter the new name of the Physician", selectedOption.getName());
                 String lastName = JOptionPane.showInputDialog(null, "Enter the new lastname of the Physician", selectedOption.getLastName());
-                Object[] optionsSpecialty = Util.listToArray(new SpecialtyModel().findAll());
+                Object[] optionsSpecialty = new SpecialtyModel().findAll().toArray();
                 if (optionsSpecialty.length > 0) {
                     Specialty selectedSpecialty = (Specialty) JOptionPane.showInputDialog(
                             null,
@@ -87,7 +86,7 @@ public class PhysicianController {
     }
 
     public void delete() {
-        Object[] options = Util.listToArray(instanceModel().findAll());
+        Object[] options = instanceModel().findAll().toArray();
         if (options.length > 0) {
             Physician selectedOption = (Physician) JOptionPane.showInputDialog(
                     null,
@@ -121,7 +120,7 @@ public class PhysicianController {
     public void getPhysiciansBySpecialty() {
         List<String> filteredList;
         StringBuilder list = new StringBuilder("                     =========== Results ===========                     \n");
-        Object[] options = Util.listToArray(new SpecialtyModel().findAll());
+        Object[] options = new SpecialtyModel().findAll().toArray();
         if (options.length > 0) {
             Specialty selectedOption = (Specialty) JOptionPane.showInputDialog(
                     null,

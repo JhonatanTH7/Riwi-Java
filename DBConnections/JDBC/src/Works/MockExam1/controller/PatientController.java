@@ -1,6 +1,5 @@
 package Works.MockExam1.controller;
 
-import Util;
 import Works.MockExam1.entity.Patient;
 import Works.MockExam1.model.PatientModel;
 
@@ -61,7 +60,7 @@ public class PatientController {
     }
 
     public void delete() {
-        Object[] options = Util.listToArray(instanceModel().findAll());
+        Object[] options = instanceModel().findAll().toArray();
         if (options.length > 0) {
             Patient selectedOption = (Patient) JOptionPane.showInputDialog(
                     null,
