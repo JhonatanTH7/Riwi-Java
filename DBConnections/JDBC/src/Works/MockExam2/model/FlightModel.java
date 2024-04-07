@@ -1,5 +1,6 @@
 package Works.MockExam2.model;
 
+import Works.MockExam2.Utils.DeleteFromTable;
 import Works.MockExam2.database.CRUD;
 import Works.MockExam2.database.ConfigDB;
 import Works.MockExam2.entity.Flight;
@@ -25,7 +26,7 @@ public class FlightModel implements CRUD {
 
     @Override
     public boolean delete(int id) {
-        return false;
+        return DeleteFromTable.deleteInt("flights", "id", id);
     }
 
     @Override
