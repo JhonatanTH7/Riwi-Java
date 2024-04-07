@@ -1,26 +1,23 @@
 package Works.MockExam2.controller;
 
-
-import Works.MockExam2.entity.Plane;
-import Works.MockExam2.entity.Reservation;
-import Works.MockExam2.model.ReservationModel;
+import Works.MockExam2.entity.Passenger;
+import Works.MockExam2.model.PassengerModel;
 
 import javax.swing.*;
 import java.util.List;
 
-public class ReservationController {
-
-    public ReservationModel instanceModel() {
-        return new ReservationModel();
+public class PassengerController {
+    public PassengerModel instanceModel() {
+        return new PassengerModel();
     }
 
     public void delete() {
         Object[] options = instanceModel().findAll().toArray();
         if (options.length > 0) {
-            Reservation selectedOption = (Reservation) JOptionPane.showInputDialog(
+            Passenger selectedOption = (Passenger) JOptionPane.showInputDialog(
                     null,
-                    "Select the Reservation that you want to delete:\n",
-                    "Deleting a Reservation",
+                    "Select the Passenger that you want to delete:\n",
+                    "Deleting a Passenger",
                     JOptionPane.QUESTION_MESSAGE,
                     null,
                     options,
@@ -29,19 +26,19 @@ public class ReservationController {
                 JOptionPane.showMessageDialog(null, "No option selected");
             } else {
                 int confirm = JOptionPane.showConfirmDialog(null,
-                        "Are you sure you want to delete this Reservation?");
+                        "Are you sure you want to delete this Passenger?");
                 if (confirm == 0) {
                     if (instanceModel().delete(selectedOption.getId())) {
-                        JOptionPane.showMessageDialog(null, "Reservation successfully deleted");
+                        JOptionPane.showMessageDialog(null, "Passenger successfully deleted");
                     } else {
-                        JOptionPane.showMessageDialog(null, "Couldn't delete the Reservation");
+                        JOptionPane.showMessageDialog(null, "Couldn't delete the Passenger");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "No Reservation was deleted");
+                    JOptionPane.showMessageDialog(null, "No Passenger was deleted");
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(null, "There is no Reservations yet");
+            JOptionPane.showMessageDialog(null, "There is no Passengers yet");
         }
     }
 
@@ -50,13 +47,13 @@ public class ReservationController {
     }
 
     public StringBuilder getAll(List<Object> objectsList) {
-        StringBuilder list = new StringBuilder("Reservations List:\n");
+        StringBuilder list = new StringBuilder("Passenger List:\n");
         if (objectsList.isEmpty()) {
-            list.append("No Reservations registered yet");
+            list.append("No Passenger registered yet");
         } else {
             for (Object obj : objectsList) {
-                Reservation objReservation = (Reservation) obj;
-                list.append(objReservation.toString()).append("\n");
+                Passenger objPassenger = (Passenger) obj;
+                list.append(objPassenger.toString()).append("\n");
             }
         }
         return list;

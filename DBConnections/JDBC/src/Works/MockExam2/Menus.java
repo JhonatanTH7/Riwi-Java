@@ -1,6 +1,8 @@
 package Works.MockExam2;
 
 
+import Works.MockExam2.controller.FlightController;
+import Works.MockExam2.controller.PassengerController;
 import Works.MockExam2.controller.PlaneController;
 import Works.MockExam2.controller.ReservationController;
 
@@ -45,79 +47,79 @@ public class Menus {
     }
 
     public void flightMenu() {
+        FlightController flightController = new FlightController();
         String option2;
         do {
             option2 = JOptionPane.showInputDialog(null, """
 
-                        SPECIALTIES MENU
+                        FLIGHTS MENU
 
-                    1. Show all Specialties
-                    2. Add Specialty
-                    3. Update Specialty
-                    4. Delete Specialty
-                    5. Show all Physicians in a Specialty
-                    6. Exit
+                    1. Show all Flights
+                    2. Add Flight
+                    3. Update Flight
+                    4. Delete Flight
+                    5. Exit
 
                     Choose an option:
 
                     """);
             switch (option2) {
                 case "1":
+                    flightController.getAll();
                     break;
                 case "2":
                     break;
                 case "3":
                     break;
                 case "4":
+                    flightController.delete();
                     break;
                 case "5":
-                    break;
-                case "6":
                     JOptionPane.showMessageDialog(null, "Going back to main menu");
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Not a valid option");
                     break;
             }
-        } while (!option2.equals("6"));
+        } while (!option2.equals("5"));
     }
 
     public void passengerMenu() {
+        PassengerController passengerController = new PassengerController();
         String option2;
         do {
             option2 = JOptionPane.showInputDialog(null, """
 
-                        SPECIALTIES MENU
+                        PASSENGERS MENU
 
-                    1. Show all Specialties
-                    2. Add Specialty
-                    3. Update Specialty
-                    4. Delete Specialty
-                    5. Show all Physicians in a Specialty
-                    6. Exit
+                    1. Show all Passengers
+                    2. Add Passenger
+                    3. Update Passenger
+                    4. Delete Passenger
+                    5. Exit
 
                     Choose an option:
 
                     """);
             switch (option2) {
                 case "1":
+                    passengerController.getAll();
                     break;
                 case "2":
                     break;
                 case "3":
                     break;
                 case "4":
+                    passengerController.delete();
                     break;
                 case "5":
-                    break;
-                case "6":
                     JOptionPane.showMessageDialog(null, "Going back to main menu");
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Not a valid option");
                     break;
             }
-        } while (!option2.equals("6"));
+        } while (!option2.equals("5"));
     }
 
     public void reservationMenu() {
@@ -126,20 +128,20 @@ public class Menus {
         do {
             option2 = JOptionPane.showInputDialog(null, """
 
-                        SPECIALTIES MENU
+                        RESERVATIONS MENU
 
-                    1. Show all Specialties
-                    2. Add Specialty
-                    3. Update Specialty
-                    4. Delete Specialty
-                    5. Show all Physicians in a Specialty
-                    6. Exit
+                    1. Show all Reservations
+                    2. Add Reservation
+                    3. Update Reservation
+                    4. Delete Reservation
+                    5. Exit
 
                     Choose an option:
 
                     """);
             switch (option2) {
                 case "1":
+                    reservationController.getAll();
                     break;
                 case "2":
                     break;
@@ -149,14 +151,12 @@ public class Menus {
                     reservationController.delete();
                     break;
                 case "5":
-                    break;
-                case "6":
                     JOptionPane.showMessageDialog(null, "Going back to main menu");
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Not a valid option");
                     break;
             }
-        } while (!option2.equals("6"));
+        } while (!option2.equals("5"));
     }
 }
