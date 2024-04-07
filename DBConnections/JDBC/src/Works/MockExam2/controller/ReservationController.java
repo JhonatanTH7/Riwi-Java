@@ -1,10 +1,12 @@
 package Works.MockExam2.controller;
 
 
+import Works.MockExam2.entity.Plane;
 import Works.MockExam2.entity.Reservation;
 import Works.MockExam2.model.ReservationModel;
 
 import javax.swing.*;
+import java.util.List;
 
 public class ReservationController {
 
@@ -41,5 +43,22 @@ public class ReservationController {
         } else {
             JOptionPane.showMessageDialog(null, "There is no Reservations yet");
         }
+    }
+
+    public void getAll() {
+        JOptionPane.showMessageDialog(null, getAll(instanceModel().findAll()));
+    }
+
+    public StringBuilder getAll(List<Object> objectsList) {
+        StringBuilder list = new StringBuilder("Reservations List:\n");
+        if (objectsList.isEmpty()) {
+            list.append("No Reservations registered yet");
+        } else {
+            for (Object obj : objectsList) {
+                Reservation objReservation = (Reservation) obj;
+                list.append(objReservation.toString()).append("\n");
+            }
+        }
+        return list;
     }
 }
