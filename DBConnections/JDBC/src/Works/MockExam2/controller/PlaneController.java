@@ -5,6 +5,7 @@ import Works.MockExam2.entity.Plane;
 import Works.MockExam2.model.PlaneModel;
 
 import javax.swing.*;
+import java.util.List;
 
 public class PlaneController {
 
@@ -43,4 +44,20 @@ public class PlaneController {
         }
     }
 
+    public void getAll() {
+        JOptionPane.showMessageDialog(null, getAll(instanceModel().findAll()));
+    }
+
+    public StringBuilder getAll(List<Object> objectsList) {
+        StringBuilder list = new StringBuilder("Planes List:\n");
+        if (objectsList.isEmpty()) {
+            list.append("No Planes registered yet");
+        } else {
+            for (Object obj : objectsList) {
+                Plane objPlane = (Plane) obj;
+                list.append(objPlane.toString()).append("\n");
+            }
+        }
+        return list;
+    }
 }

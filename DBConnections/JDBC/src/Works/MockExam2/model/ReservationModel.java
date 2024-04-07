@@ -32,7 +32,7 @@ public class ReservationModel implements CRUD {
     @Override
     public List<Object> findAll() {
         List<Object> reservationssList = new ArrayList<>();
-        String sql = "SELECT * FROM flights;";
+        String sql = "SELECT * FROM reservations;";
         Connection objConnection = ConfigDB.openConnection();
         try {
             PreparedStatement objPrepare = objConnection.prepareStatement(sql);

@@ -46,7 +46,7 @@ public class Plane {
     @Override
     public String toString() {
         return
-                "  -ID: " + id +
+                "  - ID: " + id +
                         "  Model: " + model +
                         "  Capacity: " + capacity;
     }

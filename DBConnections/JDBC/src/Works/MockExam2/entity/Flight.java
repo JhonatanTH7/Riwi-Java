@@ -71,7 +71,7 @@ public class Flight {
     @Override
     public String toString() {
         return
-                "  -ID: " + id +
+                "  - ID: " + id +
                         "  Destination: " + destination +
                         "  DepartureDate: " + departureDate +
                         "  DepartureTime: " + departureTime +

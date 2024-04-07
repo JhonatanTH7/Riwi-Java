@@ -70,7 +70,7 @@ public class Reservation {
     @Override
     public String toString() {
         return
-                "  -ID: " + id +
+                "  - ID: " + id +
                         "  ReservationDate: " + reservationDate +
                         "  Seat: " + seat +
                         "  PassengerID: " + idPassenger +

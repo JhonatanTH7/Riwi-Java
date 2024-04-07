@@ -57,7 +57,7 @@ public class Passenger {
     @Override
     public String toString() {
         return
-                "  -ID: " + id +
+                "  - ID: " + id +
                         "  Name: " + name +
                         "  LastName: " + lastName +
                         "  IdentityDocument: " + identityDocument;

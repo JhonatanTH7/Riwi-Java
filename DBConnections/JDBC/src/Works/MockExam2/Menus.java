@@ -2,6 +2,7 @@ package Works.MockExam2;
 
 
 import Works.MockExam2.controller.PlaneController;
+import Works.MockExam2.controller.ReservationController;
 
 import javax.swing.*;
 
@@ -120,6 +121,7 @@ public class Menus {
     }
 
     public void reservationMenu() {
+        ReservationController reservationController = new ReservationController();
         String option2;
         do {
             option2 = JOptionPane.showInputDialog(null, """
@@ -144,6 +146,7 @@ public class Menus {
                 case "3":
                     break;
                 case "4":
+                    reservationController.delete();
                     break;
                 case "5":
                     break;
