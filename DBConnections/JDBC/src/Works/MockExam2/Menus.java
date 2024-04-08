@@ -28,10 +28,13 @@ public class Menus {
                     """);
             switch (option2) {
                 case "1":
+                    planeController.getAll();
                     break;
                 case "2":
+                    planeController.add();
                     break;
                 case "3":
+                    planeController.update();
                     break;
                 case "4":
                     planeController.delete();
@@ -68,8 +71,10 @@ public class Menus {
                     flightController.getAll();
                     break;
                 case "2":
+                    flightController.add();
                     break;
                 case "3":
+                    flightController.update();
                     break;
                 case "4":
                     flightController.delete();
@@ -106,8 +111,10 @@ public class Menus {
                     passengerController.getAll();
                     break;
                 case "2":
+                    passengerController.add();
                     break;
                 case "3":
+                    passengerController.update();
                     break;
                 case "4":
                     passengerController.delete();
@@ -144,8 +151,10 @@ public class Menus {
                     reservationController.getAll();
                     break;
                 case "2":
+                    reservationController.add();
                     break;
                 case "3":
+                    reservationController.update();
                     break;
                 case "4":
                     reservationController.delete();

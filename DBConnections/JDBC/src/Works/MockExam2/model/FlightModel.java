@@ -16,12 +16,49 @@ import java.util.List;
 public class FlightModel implements CRUD {
     @Override
     public Object insert(Object object) {
-        return null;
+        Flight objFlight = (Flight) object;
+        String sql = "INSERT INTO flights(destination,departureDate,departureTime,idPlane) VALUES(?,?,?,?);";
+        Connection objConnection = ConfigDB.openConnection();
+        try {
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            objPrepare.setString(1, objFlight.getDestination());
+            objPrepare.setDate(2, objFlight.getDepartureDate());
+            objPrepare.setTime(3, objFlight.getDepartureTime());
+            objPrepare.setInt(4, objFlight.getIdPlane());
+            objPrepare.execute();
+            ResultSet objResult = objPrepare.getGeneratedKeys();
+            while (objResult.next()) {
+                objFlight.setId(objResult.getInt(1));
+            }
+            JOptionPane.showMessageDialog(null, "Flight added successfully");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        ConfigDB.closeConnection();
+        return objFlight;
     }
 
     @Override
     public boolean update(Object object) {
-        return false;
+        Flight objFlight = (Flight) object;
+        boolean isUpdated = false;
+        String sql = "UPDATE flights SET destination = ?, departureDate= ?, departureTime = ?, idPlane = ? WHERE id = ?;";
+        Connection objConnection = ConfigDB.openConnection();
+        try {
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+            objPrepare.setString(1, objFlight.getDestination());
+            objPrepare.setDate(2, objFlight.getDepartureDate());
+            objPrepare.setTime(3, objFlight.getDepartureTime());
+            objPrepare.setInt(4, objFlight.getIdPlane());
+            objPrepare.setInt(5, objFlight.getId());
+            if (objPrepare.executeUpdate() > 0) {
+                isUpdated = true;
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        ConfigDB.closeConnection();
+        return isUpdated;
     }
 
     @Override
@@ -32,11 +69,10 @@ public class FlightModel implements CRUD {
     @Override
     public List<Object> findAll() {
         List<Object> flightsList = new ArrayList<>();
-        String sql = "SELECT * FROM flights;";
+        String sql = "SELECT * FROM flights ORDER BY id ASC;";
         Connection objConnection = ConfigDB.openConnection();
         try {
-            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
-            ResultSet objResult = objPrepare.executeQuery();
+            ResultSet objResult = objConnection.prepareStatement(sql).executeQuery();
             while (objResult.next()) {
                 flightsList.add(new Flight(objResult.getInt("id"), objResult.getString("destination"), objResult.getDate("departureDate"), objResult.getTime("departureTime"), objResult.getInt("idPlane")));
             }

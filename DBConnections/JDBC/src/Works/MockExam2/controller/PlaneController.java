@@ -13,6 +13,12 @@ public class PlaneController {
         return new PlaneModel();
     }
 
+    public void add() {
+    }
+
+    public void update() {
+    }
+
     public void delete() {
         Object[] options = instanceModel().findAll().toArray();
         if (options.length > 0) {

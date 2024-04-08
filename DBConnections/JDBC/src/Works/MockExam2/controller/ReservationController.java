@@ -14,6 +14,12 @@ public class ReservationController {
         return new ReservationModel();
     }
 
+    public void add() {
+    }
+
+    public void update() {
+    }
+
     public void delete() {
         Object[] options = instanceModel().findAll().toArray();
         if (options.length > 0) {
