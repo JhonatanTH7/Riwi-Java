@@ -1,10 +1,15 @@
 package Works.MockExam2.controller;
 
 
+import Works.MockExam2.entity.Flight;
+import Works.MockExam2.entity.Passenger;
 import Works.MockExam2.entity.Reservation;
+import Works.MockExam2.model.FlightModel;
+import Works.MockExam2.model.PassengerModel;
 import Works.MockExam2.model.ReservationModel;
 
 import javax.swing.*;
+import java.sql.Date;
 import java.util.List;
 
 public class ReservationController {
@@ -14,7 +19,49 @@ public class ReservationController {
     }
 
     public void add() {
-
+        Object[] optionsFlight = new FlightModel().findByDate(Date.valueOf(JOptionPane.showInputDialog(null, "Enter the Date of the Reservation (YYYY-MM-DD)"))).toArray();
+        if (optionsFlight.length > 0) {
+            Flight selectedFlight = (Flight) JOptionPane.showInputDialog(
+                    null,
+                    "Select a Flight:\n",
+                    "Selecting a Flight",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    optionsFlight,
+                    optionsFlight[0]);
+            if (selectedFlight == null) {
+                JOptionPane.showMessageDialog(null, "No Flight selected");
+            } else {
+                int capacityOfPLane = instanceModel().findCapacityOfPLane(selectedFlight.getId());
+                System.out.println(capacityOfPLane);
+                System.out.println(instanceModel().findTotalReservationsOfAFlight(selectedFlight.getId()));
+                if ((capacityOfPLane) > instanceModel().findTotalReservationsOfAFlight(selectedFlight.getId())) {
+                    String seat = JOptionPane.showInputDialog(null, "Enter a number of seat between 1 - " + capacityOfPLane);
+                    if (instanceModel().findSeatAvailabilityInSpecificFlight(selectedFlight.getId(), seat) > 0) {
+                        JOptionPane.showMessageDialog(null, "This seat is already taken");
+                    } else {
+                        Object[] optionsPassenger = new PassengerModel().findAll().toArray();
+                        Passenger selectedPassenger = (Passenger) JOptionPane.showInputDialog(
+                                null,
+                                "Select a Passenger:\n",
+                                "Selecting a Passenger",
+                                JOptionPane.QUESTION_MESSAGE,
+                                null,
+                                optionsPassenger,
+                                optionsPassenger[0]);
+                        if (selectedPassenger == null) {
+                            JOptionPane.showMessageDialog(null, "No Passenger selected");
+                        } else {
+                            System.out.println(instanceModel().insert(new Reservation(selectedFlight.getDepartureDate(), seat, selectedPassenger.getId(), selectedFlight.getId())));
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Max capacity reached, no seats available in this flight");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No Flights available this date");
+        }
     }
 
     public void update() {

@@ -6,10 +6,7 @@ import Works.MockExam2.database.ConfigDB;
 import Works.MockExam2.entity.Reservation;
 
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,5 +78,60 @@ public class ReservationModel implements CRUD {
         }
         ConfigDB.closeConnection();
         return reservationssList;
+    }
+
+    public int findTotalReservationsOfAFlight(int idFlight) {
+        String sql = "SELECT COUNT(*) FROM reservations WHERE idFlight = ?;";
+        int count = 0;
+        Connection objConnection = ConfigDB.openConnection();
+        try {
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+            objPrepare.setInt(1, idFlight);
+            ResultSet objResult = objPrepare.executeQuery();
+            if (objResult.next()) {
+                count = objResult.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        ConfigDB.closeConnection();
+        return count;
+    }
+
+    public int findSeatAvailabilityInSpecificFlight(int idFlight, String seat) {
+        String sql = "SELECT COUNT(*) FROM reservations WHERE idFlight = ? AND seat = ?;";
+        int count = 0;
+        Connection objConnection = ConfigDB.openConnection();
+        try {
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+            objPrepare.setInt(1, idFlight);
+            objPrepare.setString(2, seat);
+            ResultSet objResult = objPrepare.executeQuery();
+            if (objResult.next()) {
+                count = objResult.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        ConfigDB.closeConnection();
+        return count;
+    }
+
+    public int findCapacityOfPLane(int idFlight) {
+        String query = "SELECT capacity FROM planes WHERE id = (SELECT idPlane FROM flights WHERE id = ?)";
+        int count = 0;
+        Connection objConnection = ConfigDB.openConnection();
+        try {
+            PreparedStatement objPrepare = objConnection.prepareStatement(query);
+            objPrepare.setInt(1, idFlight);
+            ResultSet objResult = objPrepare.executeQuery();
+            if (objResult.next()) {
+                count = objResult.getInt("capacity");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        ConfigDB.closeConnection();
+        return count;
     }
 }

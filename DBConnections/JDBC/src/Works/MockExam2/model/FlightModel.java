@@ -6,10 +6,7 @@ import Works.MockExam2.database.ConfigDB;
 import Works.MockExam2.entity.Flight;
 
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,6 +96,24 @@ public class FlightModel implements CRUD {
         }
         ConfigDB.closeConnection();
         return flightsList;
+    }
+
+    public List<Object> findByDate(Date searchedDate) {
+        List<Object> resultsList = new ArrayList<>();
+        String sql = "SELECT * FROM flights WHERE departureDate = ?;";
+        Connection objConnection = ConfigDB.openConnection();
+        try {
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+            objPrepare.setDate(1, searchedDate);
+            ResultSet objResult = objPrepare.executeQuery();
+            while (objResult.next()) {
+                resultsList.add(extractResultSet(objResult));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        ConfigDB.closeConnection();
+        return resultsList;
     }
 
     private Flight extractResultSet(ResultSet objResult) throws SQLException {
