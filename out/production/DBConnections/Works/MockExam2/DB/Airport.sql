@@ -52,9 +52,9 @@ INSERT INTO passengers (name, lastName, identityDocument) VALUES
 ('Michael', 'Johnson', 'GHI54321');
 
 INSERT INTO reservations (reservationDate, seat, idPassenger, idFlight) VALUES
-('2024-04-08', 'A1', 1, 1),
-('2024-04-10', 'B3', 2, 2),
-('2024-04-14', 'C2', 3, 3);
+('2024-04-10', 'A1', 1, 1),
+('2024-04-12', 'B3', 2, 2),
+('2024-04-15', 'C2', 3, 3);
 
 DROP TABLE reservations;
 DROP TABLE flights;

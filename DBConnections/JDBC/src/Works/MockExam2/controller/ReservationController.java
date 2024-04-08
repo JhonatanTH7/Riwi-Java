@@ -33,8 +33,6 @@ public class ReservationController {
                 JOptionPane.showMessageDialog(null, "No Flight selected");
             } else {
                 int capacityOfPLane = instanceModel().findCapacityOfPLane(selectedFlight.getId());
-                System.out.println(capacityOfPLane);
-                System.out.println(instanceModel().findTotalReservationsOfAFlight(selectedFlight.getId()));
                 if ((capacityOfPLane) > instanceModel().findTotalReservationsOfAFlight(selectedFlight.getId())) {
                     String seat = JOptionPane.showInputDialog(null, "Enter a number of seat between 1 - " + capacityOfPLane);
                     if (instanceModel().findSeatAvailabilityInSpecificFlight(selectedFlight.getId(), seat) > 0) {
@@ -65,7 +63,75 @@ public class ReservationController {
     }
 
     public void update() {
+        Object[] reservationOptions = instanceModel().findAll().toArray();
+        if (reservationOptions.length > 0) {
+            Reservation selectedReservation = (Reservation) JOptionPane.showInputDialog(
+                    null,
+                    "Select a Reservation:\n",
+                    "Updating a Reservation",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    reservationOptions,
+                    reservationOptions[0]);
+            if (selectedReservation == null) {
+                JOptionPane.showMessageDialog(null, "No Reservation selected");
+            } else {
+                Object[] optionsFlight = new FlightModel().findByDate(Date.valueOf(JOptionPane.showInputDialog(null, "Enter the new Date of the Reservation (YYYY-MM-DD)", selectedReservation.getReservationDate()))).toArray();
+                if (optionsFlight.length > 0) {
+                    Flight selectedFlight = (Flight) JOptionPane.showInputDialog(
+                            null,
+                            "Select the new Flight:\n",
+                            "Updating the Flight",
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            optionsFlight,
+                            optionsFlight[0]);
+                    if (selectedFlight == null) {
+                        JOptionPane.showMessageDialog(null, "No Flight selected");
+                    } else {
+                        int capacityOfPLane = instanceModel().findCapacityOfPLane(selectedFlight.getId());
+                        if ((capacityOfPLane) > instanceModel().findTotalReservationsOfAFlight(selectedFlight.getId())) {
+                            String seat = JOptionPane.showInputDialog(null, "Enter the new number of seat between 1 - " + capacityOfPLane, selectedReservation.getSeat());
 
+                            if (instanceModel().findSeatAvailabilityInSpecificFlight(selectedFlight.getId(), seat) == 0 || (seat.equals(selectedReservation.getSeat()))) {
+                                Object[] optionsPassenger = new PassengerModel().findAll().toArray();
+                                Passenger selectedPassenger = (Passenger) JOptionPane.showInputDialog(
+                                        null,
+                                        "Select the new Passenger:\n",
+                                        "Updating the Passenger",
+                                        JOptionPane.QUESTION_MESSAGE,
+                                        null,
+                                        optionsPassenger,
+                                        optionsPassenger[0]);
+                                if (selectedPassenger == null) {
+                                    JOptionPane.showMessageDialog(null, "No Passenger selected");
+                                } else {
+                                    selectedReservation.setReservationDate(selectedFlight.getDepartureDate());
+                                    selectedReservation.setSeat(seat);
+                                    selectedReservation.setIdPassenger(selectedPassenger.getId());
+                                    selectedReservation.setIdFlight(selectedFlight.getId());
+                                    if (instanceModel().update(selectedReservation)) {
+                                        JOptionPane.showMessageDialog(null, "Reservation successfully updated");
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "Couldn't update the Reservation");
+                                    }
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(null, "This seat is already taken");
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Max capacity reached, no seats available in this flight");
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No Flights available this date");
+                }
+
+
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No Reservations registered yet");
+        }
     }
 
     public void delete() {
