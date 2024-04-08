@@ -14,9 +14,46 @@ public class PlaneController {
     }
 
     public void add() {
+        try {
+            String model = JOptionPane.showInputDialog(null, "Enter the model of the Plane");
+            int capacity = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the capacity of the Plane"));
+            System.out.println(instanceModel().insert(new Plane(model, capacity)));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error >> Value entered not valid");
+            System.out.println(e.getMessage());
+        }
     }
 
     public void update() {
+        Object[] options = instanceModel().findAll().toArray();
+        if (options.length > 0) {
+            Plane selectedOption = (Plane) JOptionPane.showInputDialog(
+                    null,
+                    "Select the Plane that you want to update:\n",
+                    "Updating a Plane",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
+            if (selectedOption == null) {
+                JOptionPane.showMessageDialog(null, "No option selected");
+            } else {
+                try {
+                    selectedOption.setModel(JOptionPane.showInputDialog(null, "Enter the model of the Plane", selectedOption.getModel()));
+                    selectedOption.setCapacity(Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the capacity of the Plane", selectedOption.getCapacity())));
+                    if (instanceModel().update(selectedOption)) {
+                        JOptionPane.showMessageDialog(null, "Plane Updated successfully");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Couldn't update the Plane");
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error >> Value entered not valid");
+                    System.out.println(e.getMessage());
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No Planes registered yet");
+        }
     }
 
     public void delete() {
@@ -46,7 +83,7 @@ public class PlaneController {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(null, "There is no Planes yet");
+            JOptionPane.showMessageDialog(null, "No Planes registered yet");
         }
     }
 
