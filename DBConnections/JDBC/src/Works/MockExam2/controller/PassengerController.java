@@ -4,6 +4,7 @@ import Works.MockExam2.entity.Passenger;
 import Works.MockExam2.model.PassengerModel;
 
 import javax.swing.*;
+import java.sql.Date;
 import java.util.List;
 
 public class PassengerController {
@@ -12,9 +13,38 @@ public class PassengerController {
     }
 
     public void add() {
+        String name = JOptionPane.showInputDialog(null, "Enter the name of the Passenger");
+        String lastName = JOptionPane.showInputDialog(null, "Enter the lastname of the Passenger");
+        String identityDocument = JOptionPane.showInputDialog(null, "Enter the identity document of the Passenger");
+        System.out.println(instanceModel().insert(new Passenger(name, lastName, identityDocument)));
     }
 
     public void update() {
+        Object[] options = instanceModel().findAll().toArray();
+        if (options.length > 0) {
+            Passenger selectedOption = (Passenger) JOptionPane.showInputDialog(
+                    null,
+                    "Select the Passenger that you want to update:\n",
+                    "Updating a Passenger",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
+            if (selectedOption == null) {
+                JOptionPane.showMessageDialog(null, "No option selected");
+            } else {
+                selectedOption.setName(JOptionPane.showInputDialog(null, "Enter the new name of the Passenger", selectedOption.getName()));
+                selectedOption.setLastName(JOptionPane.showInputDialog(null, "Enter the new lastname of the Passenger", selectedOption.getLastName()));
+                selectedOption.setIdentityDocument(JOptionPane.showInputDialog(null, "Enter the new identity document of the Passenger", selectedOption.getIdentityDocument()));
+                if (instanceModel().update(selectedOption)) {
+                    JOptionPane.showMessageDialog(null, "Passenger Updated successfully");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Couldn't update the Passenger");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No Passengers registered yet");
+        }
     }
 
     public void delete() {
