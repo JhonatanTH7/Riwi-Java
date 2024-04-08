@@ -181,4 +181,27 @@ public class ReservationController {
         }
         return list;
     }
+
+    public void getByFlightId() {
+        Object[] flightOptions = new FlightModel().findAll().toArray();
+        if (flightOptions.length > 0) {
+            Flight selectedFlight = (Flight) JOptionPane.showInputDialog(
+                    null,
+                    "Select the new Flight:\n",
+                    "Updating the Flight",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    flightOptions,
+                    flightOptions[0]);
+            if (selectedFlight == null) {
+                JOptionPane.showMessageDialog(null, "No Flight selected");
+            } else {
+                StringBuilder list = new StringBuilder("Filtered by Flight: " + selectedFlight.getDestination() + "\n");
+                list.append(getAll(instanceModel().findByFlightId(selectedFlight.getId())));
+                JOptionPane.showMessageDialog(null, list);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No Flights found");
+        }
+    }
 }

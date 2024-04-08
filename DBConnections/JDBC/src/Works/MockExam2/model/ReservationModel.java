@@ -71,7 +71,7 @@ public class ReservationModel implements CRUD {
         try {
             ResultSet objResult = objConnection.prepareStatement(sql).executeQuery();
             while (objResult.next()) {
-                reservationssList.add(new Reservation(objResult.getInt("id"), objResult.getDate("reservationDate"), objResult.getString("seat"), objResult.getInt("idPassenger"), objResult.getInt("idFlight")));
+                reservationssList.add(extractResultSet(objResult));
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -133,5 +133,27 @@ public class ReservationModel implements CRUD {
         }
         ConfigDB.closeConnection();
         return count;
+    }
+
+    public List<Object> findByFlightId(int idFlight) {
+        List<Object> resultsList = new ArrayList<>();
+        String sql = "SELECT * FROM reservations WHERE idFlight = ?;";
+        Connection objConnection = ConfigDB.openConnection();
+        try {
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+            objPrepare.setInt(1, idFlight);
+            ResultSet objResult = objPrepare.executeQuery();
+            while (objResult.next()) {
+                resultsList.add(extractResultSet(objResult));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        ConfigDB.closeConnection();
+        return resultsList;
+    }
+
+    private Reservation extractResultSet(ResultSet objResult) throws SQLException {
+        return new Reservation(objResult.getInt("id"), objResult.getDate("reservationDate"), objResult.getString("seat"), objResult.getInt("idPassenger"), objResult.getInt("idFlight"));
     }
 }

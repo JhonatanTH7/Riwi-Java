@@ -146,7 +146,8 @@ public class Menus {
                     2. Add Reservation
                     3. Update Reservation
                     4. Delete Reservation
-                    5. Exit
+                    5. Filter by Flight
+                    6. Exit
 
                     Choose an option:
 
@@ -165,12 +166,15 @@ public class Menus {
                     reservationController.delete();
                     break;
                 case "5":
+                    reservationController.getByFlightId();
+                    break;
+                case "6":
                     JOptionPane.showMessageDialog(null, "Going back to main menu");
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Not a valid option");
                     break;
             }
-        } while (!option2.equals("5"));
+        } while (!option2.equals("6"));
     }
 }
