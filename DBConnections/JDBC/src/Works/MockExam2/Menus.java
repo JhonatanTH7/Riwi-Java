@@ -61,7 +61,8 @@ public class Menus {
                     2. Add Flight
                     3. Update Flight
                     4. Delete Flight
-                    5. Exit
+                    5. Filter Flights by Destination
+                    6. Exit
 
                     Choose an option:
 
@@ -80,13 +81,16 @@ public class Menus {
                     flightController.delete();
                     break;
                 case "5":
+                    flightController.getByDestination();
+                    break;
+                case "6":
                     JOptionPane.showMessageDialog(null, "Going back to main menu");
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Not a valid option");
                     break;
             }
-        } while (!option2.equals("5"));
+        } while (!option2.equals("6"));
     }
 
     public void passengerMenu() {
@@ -101,7 +105,8 @@ public class Menus {
                     2. Add Passenger
                     3. Update Passenger
                     4. Delete Passenger
-                    5. Exit
+                    5. Filter Passengers by Name
+                    6. Exit
 
                     Choose an option:
 
@@ -116,17 +121,17 @@ public class Menus {
                 case "3":
                     passengerController.update();
                     break;
-                case "4":
-                    passengerController.delete();
-                    break;
                 case "5":
+                    passengerController.getByName();
+                    break;
+                case "6":
                     JOptionPane.showMessageDialog(null, "Going back to main menu");
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Not a valid option");
                     break;
             }
-        } while (!option2.equals("5"));
+        } while (!option2.equals("6"));
     }
 
     public void reservationMenu() {

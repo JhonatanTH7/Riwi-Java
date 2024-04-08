@@ -4,7 +4,6 @@ import Works.MockExam2.entity.Passenger;
 import Works.MockExam2.model.PassengerModel;
 
 import javax.swing.*;
-import java.sql.Date;
 import java.util.List;
 
 public class PassengerController {
@@ -83,9 +82,9 @@ public class PassengerController {
     }
 
     public StringBuilder getAll(List<Object> objectsList) {
-        StringBuilder list = new StringBuilder("Passenger List:\n");
+        StringBuilder list = new StringBuilder("Passengers List:\n");
         if (objectsList.isEmpty()) {
-            list.append("No Passenger registered yet");
+            list.append("No Passengers registered yet");
         } else {
             for (Object obj : objectsList) {
                 Passenger objPassenger = (Passenger) obj;
@@ -93,5 +92,12 @@ public class PassengerController {
             }
         }
         return list;
+    }
+
+    public void getByName() {
+        String nameSearched = JOptionPane.showInputDialog(null, "Enter the name of the passenger you want to search");
+        StringBuilder list = new StringBuilder("Filtered by Name: " + nameSearched + "\n");
+        list.append(getAll(instanceModel().findByName(nameSearched)));
+        JOptionPane.showMessageDialog(null, list);
     }
 }

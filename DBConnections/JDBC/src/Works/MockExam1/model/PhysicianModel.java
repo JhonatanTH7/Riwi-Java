@@ -98,14 +98,13 @@ public class PhysicianModel implements CRUD {
     }
 
     public List<String> findPhysiciansBySpecialty(String specialty) {
-        ResultSet objResult;
         List<String> filteredList = new ArrayList<>();
         String sql = "SELECT  physicians.id, physicians.name, physicians.lastName, specialties.name AS specialty FROM physicians INNER JOIN specialties ON physicians.idSpecialty = specialties.id WHERE specialties.name = ?;";
         Connection objConnection = ConfigDB.openConnection();
         try {
             PreparedStatement objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, specialty);
-            objResult = objPreparedStatement.executeQuery();
+            ResultSet objResult = objPreparedStatement.executeQuery();
             while (objResult.next()) {
                 filteredList.add("- PhysicianID: " + objResult.getInt("id") + "  Name: " + objResult.getString("name") + " " + objResult.getString("lastName") + "  Specialty: " + objResult.getString("specialty"));
             }

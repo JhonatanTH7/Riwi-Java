@@ -74,12 +74,34 @@ public class FlightModel implements CRUD {
         try {
             ResultSet objResult = objConnection.prepareStatement(sql).executeQuery();
             while (objResult.next()) {
-                flightsList.add(new Flight(objResult.getInt("id"), objResult.getString("destination"), objResult.getDate("departureDate"), objResult.getTime("departureTime"), objResult.getInt("idPlane")));
+                flightsList.add(extractResultSet(objResult));
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
         ConfigDB.closeConnection();
         return flightsList;
+    }
+
+    public List<Object> findByDestination(String destinationValidate) {
+        String sql = "SELECT * FROM flights WHERE destination LIKE ?;";
+        List<Object> flightsList = new ArrayList<>();
+        Connection objConnection = ConfigDB.openConnection();
+        try {
+            PreparedStatement objPreparedStatement = objConnection.prepareStatement(sql);
+            objPreparedStatement.setString(1, "%" + destinationValidate + "%");
+            ResultSet objResult = objPreparedStatement.executeQuery();
+            while (objResult.next()) {
+                flightsList.add(extractResultSet(objResult));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        ConfigDB.closeConnection();
+        return flightsList;
+    }
+
+    private Flight extractResultSet(ResultSet objResult) throws SQLException {
+        return new Flight(objResult.getInt("id"), objResult.getString("destination"), objResult.getDate("departureDate"), objResult.getTime("departureTime"), objResult.getInt("idPlane"));
     }
 }

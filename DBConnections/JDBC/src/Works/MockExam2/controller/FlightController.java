@@ -146,4 +146,11 @@ public class FlightController {
         }
         return list;
     }
+
+    public void getByDestination() {
+        String destinationSearched = JOptionPane.showInputDialog(null, "Enter the destination for which you wish to search flights");
+        StringBuilder list = new StringBuilder("Filtered by Destination: " + destinationSearched + "\n");
+        list.append(getAll(instanceModel().findByDestination(destinationSearched)));
+        JOptionPane.showMessageDialog(null, list);
+    }
 }

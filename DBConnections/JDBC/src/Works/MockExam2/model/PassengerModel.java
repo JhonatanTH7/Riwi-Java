@@ -72,12 +72,34 @@ public class PassengerModel implements CRUD {
         try {
             ResultSet objResult = objConnection.prepareStatement(sql).executeQuery();
             while (objResult.next()) {
-                passengersList.add(new Passenger(objResult.getInt("id"), objResult.getString("name"), objResult.getString("lastName"), objResult.getString("identityDocument")));
+                passengersList.add(extractResultSet(objResult));
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
         ConfigDB.closeConnection();
         return passengersList;
+    }
+
+    public List<Object> findByName(String nameSearched) {
+        String sql = "SELECT * FROM passengers WHERE name LIKE ?;";
+        List<Object> passengersList = new ArrayList<>();
+        Connection objConnection = ConfigDB.openConnection();
+        try {
+            PreparedStatement objPreparedStatement = objConnection.prepareStatement(sql);
+            objPreparedStatement.setString(1, "%" + nameSearched + "%");
+            ResultSet objResult = objPreparedStatement.executeQuery();
+            while (objResult.next()) {
+                passengersList.add(extractResultSet(objResult));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        ConfigDB.closeConnection();
+        return passengersList;
+    }
+
+    private Passenger extractResultSet(ResultSet objResult) throws SQLException {
+        return new Passenger(objResult.getInt("id"), objResult.getString("name"), objResult.getString("lastName"), objResult.getString("identityDocument"));
     }
 }

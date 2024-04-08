@@ -1,7 +1,6 @@
 package Works.MockExam2.controller;
 
 
-import Works.MockExam2.entity.Plane;
 import Works.MockExam2.entity.Reservation;
 import Works.MockExam2.model.ReservationModel;
 
@@ -15,9 +14,11 @@ public class ReservationController {
     }
 
     public void add() {
+
     }
 
     public void update() {
+
     }
 
     public void delete() {
